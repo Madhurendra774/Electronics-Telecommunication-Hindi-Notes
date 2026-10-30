@@ -1,0 +1,1488 @@
+{
+ "university": "RGPV Bhopal – Diploma Wing",
+ "branch": "Electronics & Telecommunication (E03)",
+ "session": "2025-26",
+ "semesters": [
+  {
+   "id": "3",
+   "name": "Semester III",
+   "subjects": [
+    {
+     "code": "301",
+     "paper": "7456",
+     "name": "Electronic Devices & Circuits",
+     "units": [
+      {
+       "n": 1,
+       "name": "Semiconductor and Diodes",
+       "marks": 16,
+       "topics": [
+        {
+         "id": "301-1-1",
+         "t": "Intrinsic & Extrinsic, N-type & P-type Semiconductors",
+         "h": "नैज एवं बाह्य अर्धचालक",
+         "ready": true
+        },
+        {
+         "id": "301-1-2",
+         "t": "PN Junction Diode: Depletion Layer, Drift & Diffusion Current",
+         "h": "PN संधि डायोड",
+         "ready": true
+        },
+        {
+         "id": "301-1-3",
+         "t": "Forward & Reverse Bias, V-I Characteristics, Shockley Equation",
+         "h": "बायसिंग एवं V-I अभिलक्षण",
+         "ready": true
+        },
+        {
+         "id": "301-1-4",
+         "t": "Half Wave, Full Wave & Bridge Rectifiers",
+         "h": "दिष्टकारी (रेक्टिफायर)",
+         "ready": true
+        },
+        {
+         "id": "301-1-5",
+         "t": "Rectifier Efficiency, Ripple Factor, PIV & Comparison",
+         "h": "दिष्टकारी के प्राचल एवं तुलना",
+         "ready": true
+        },
+        {
+         "id": "301-1-6",
+         "t": "Filters: C, L, LC and π Filters",
+         "h": "फ़िल्टर",
+         "ready": true
+        },
+        {
+         "id": "301-1-7",
+         "t": "Zener Diode and Zener Voltage Regulator",
+         "h": "ज़ेनर डायोड एवं वोल्टेज रेगुलेटर",
+         "ready": true
+        },
+        {
+         "id": "301-1-8",
+         "t": "Block Diagram of Regulated DC Power Supply",
+         "h": "रेगुलेटेड DC पावर सप्लाई",
+         "ready": true
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Bipolar Junction Transistor (BJT)",
+       "marks": 16,
+       "topics": [
+        {
+         "id": "301-2-1",
+         "t": "BJT Types and Structure (Area, Doping)",
+         "h": "BJT की संरचना",
+         "ready": false
+        },
+        {
+         "id": "301-2-2",
+         "t": "Operating Regions of BJT and Q-Point",
+         "h": "BJT के प्रचालन क्षेत्र एवं Q-बिंदु",
+         "ready": false
+        },
+        {
+         "id": "301-2-3",
+         "t": "NPN and PNP Transistor Operation",
+         "h": "NPN एवं PNP ट्रांजिस्टर",
+         "ready": false
+        },
+        {
+         "id": "301-2-4",
+         "t": "BJT as a Switch",
+         "h": "स्विच के रूप में BJT",
+         "ready": false
+        },
+        {
+         "id": "301-2-5",
+         "t": "Common Base (CB) Configuration",
+         "h": "उभयनिष्ठ बेस विन्यास",
+         "ready": false
+        },
+        {
+         "id": "301-2-6",
+         "t": "Common Emitter (CE) Configuration",
+         "h": "उभयनिष्ठ एमिटर विन्यास",
+         "ready": false
+        },
+        {
+         "id": "301-2-7",
+         "t": "Common Collector (CC) Configuration",
+         "h": "उभयनिष्ठ कलेक्टर विन्यास",
+         "ready": false
+        },
+        {
+         "id": "301-2-8",
+         "t": "Relation between α, β and γ with Numericals",
+         "h": "α, β, γ में संबंध",
+         "ready": false
+        },
+        {
+         "id": "301-2-9",
+         "t": "Comparison of CB, CE and CC Configurations",
+         "h": "CB, CE, CC की तुलना",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Field Effect Transistors (FET)",
+       "marks": 16,
+       "topics": [
+        {
+         "id": "301-3-1",
+         "t": "Introduction to FET and Comparison of BJT & FET",
+         "h": "FET का परिचय",
+         "ready": false
+        },
+        {
+         "id": "301-3-2",
+         "t": "Classification of FET; JFET Construction and Operation",
+         "h": "JFET",
+         "ready": false
+        },
+        {
+         "id": "301-3-3",
+         "t": "MOSFET Types, Construction and Characteristics",
+         "h": "MOSFET",
+         "ready": false
+        },
+        {
+         "id": "301-3-4",
+         "t": "MOSFET as a Switch and Concept of CMOS",
+         "h": "MOSFET स्विच एवं CMOS",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "SCR, DIAC, TRIAC & UJT",
+       "marks": 10,
+       "topics": [
+        {
+         "id": "301-4-1",
+         "t": "SCR: Construction, Operation and V-I Characteristics",
+         "h": "SCR",
+         "ready": false
+        },
+        {
+         "id": "301-4-2",
+         "t": "TRIAC and Comparison of SCR & TRIAC",
+         "h": "TRIAC",
+         "ready": false
+        },
+        {
+         "id": "301-4-3",
+         "t": "DIAC: Construction, Operation and V-I Characteristics",
+         "h": "DIAC",
+         "ready": false
+        },
+        {
+         "id": "301-4-4",
+         "t": "UJT: Equivalent Circuit and Operation",
+         "h": "UJT",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Amplifiers and Oscillators",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "301-5-1",
+         "t": "Classification of Amplifiers",
+         "h": "एम्पलीफायर का वर्गीकरण",
+         "ready": false
+        },
+        {
+         "id": "301-5-2",
+         "t": "Positive & Negative Feedback, Barkhausen Criterion",
+         "h": "फीडबैक एवं बार्कहाउज़न मानदंड",
+         "ready": false
+        },
+        {
+         "id": "301-5-3",
+         "t": "Feedback Amplifier Topologies and Effects of Negative Feedback",
+         "h": "फीडबैक एम्पलीफायर टोपोलॉजी",
+         "ready": false
+        },
+        {
+         "id": "301-5-4",
+         "t": "Oscillators: Introduction, Classification, Amplifier vs Oscillator",
+         "h": "ऑसिलेटर का परिचय",
+         "ready": false
+        },
+        {
+         "id": "301-5-5",
+         "t": "RC Phase Shift Oscillator and Crystal Oscillator",
+         "h": "RC फेज़ शिफ्ट एवं क्रिस्टल ऑसिलेटर",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "302",
+     "paper": "7457",
+     "name": "Digital Systems",
+     "units": [
+      {
+       "n": 1,
+       "name": "Number Systems & Boolean Algebra",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "302-1-1",
+         "t": "Number Systems: Binary, Octal, Decimal, Hexadecimal",
+         "ready": false
+        },
+        {
+         "id": "302-1-2",
+         "t": "Number System Conversions including Fractions",
+         "ready": false
+        },
+        {
+         "id": "302-1-3",
+         "t": "Boolean Algebra: Rules and Laws, Duality",
+         "ready": false
+        },
+        {
+         "id": "302-1-4",
+         "t": "De-Morgan's Theorems",
+         "ready": false
+        },
+        {
+         "id": "302-1-5",
+         "t": "Algebraic Simplification of Boolean Expressions",
+         "ready": false
+        },
+        {
+         "id": "302-1-6",
+         "t": "Karnaugh Map (2, 3, 4 Variables) and Don't Care Conditions",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Logic Gates",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "302-2-1",
+         "t": "Basic and Derived Logic Gates with Truth Tables",
+         "ready": false
+        },
+        {
+         "id": "302-2-2",
+         "t": "Universal Gates (NAND, NOR) and Transistor NOT Gate",
+         "ready": false
+        },
+        {
+         "id": "302-2-3",
+         "t": "Implementing Boolean Expressions using Gates",
+         "ready": false
+        },
+        {
+         "id": "302-2-4",
+         "t": "Majority Voter and Parity Generator",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Combinational Logic Circuits",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "302-3-1",
+         "t": "Binary Addition, Subtraction, 1's and 2's Complement",
+         "ready": false
+        },
+        {
+         "id": "302-3-2",
+         "t": "Half Adder, Full Adder, Half Subtractor, Full Subtractor",
+         "ready": false
+        },
+        {
+         "id": "302-3-3",
+         "t": "Parallel Adders: Ripple Carry and Carry Look-ahead",
+         "ready": false
+        },
+        {
+         "id": "302-3-4",
+         "t": "Encoders, Priority Encoder and Decoders",
+         "ready": false
+        },
+        {
+         "id": "302-3-5",
+         "t": "BCD to 7-Segment Decoder",
+         "ready": false
+        },
+        {
+         "id": "302-3-6",
+         "t": "Multiplexers and Demultiplexers",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Sequential Logic Circuits",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "302-4-1",
+         "t": "SR Latch using NAND and NOR; Triggering",
+         "ready": false
+        },
+        {
+         "id": "302-4-2",
+         "t": "SR and JK Flip-Flops, Race Around Condition",
+         "ready": false
+        },
+        {
+         "id": "302-4-3",
+         "t": "T, D and Master-Slave JK Flip-Flops",
+         "ready": false
+        },
+        {
+         "id": "302-4-4",
+         "t": "Asynchronous and Synchronous Counters",
+         "ready": false
+        },
+        {
+         "id": "302-4-5",
+         "t": "Mod-3 Counter, Ring and Johnson Counters",
+         "ready": false
+        },
+        {
+         "id": "302-4-6",
+         "t": "Shift Registers: SISO, SIPO, PISO, PIPO",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Memory Devices",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "302-5-1",
+         "t": "Classification of Memories",
+         "ready": false
+        },
+        {
+         "id": "302-5-2",
+         "t": "RAM Organization, SRAM, DRAM, DDR RAM",
+         "ready": false
+        },
+        {
+         "id": "302-5-3",
+         "t": "ROM, PROM, EPROM, EEPROM and Flash Memory",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "303",
+     "paper": "7458",
+     "name": "Electronic Measurements & Instrumentation",
+     "units": [
+      {
+       "n": 1,
+       "name": "Basics of Measurements and Bridges",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "303-1-1",
+         "t": "Measurement System, Accuracy, Precision, Errors",
+         "ready": false
+        },
+        {
+         "id": "303-1-2",
+         "t": "DC Bridges: Wheatstone and Kelvin Double Bridge",
+         "ready": false
+        },
+        {
+         "id": "303-1-3",
+         "t": "AC Bridges: Maxwell, Hay and De-Sauty Bridges",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Potentiometer and Meters",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "303-2-1",
+         "t": "PMMC and Moving Iron Instruments",
+         "ready": false
+        },
+        {
+         "id": "303-2-2",
+         "t": "Voltmeter, Ammeter and Range Extension",
+         "ready": false
+        },
+        {
+         "id": "303-2-3",
+         "t": "Energy and Power Measurement",
+         "ready": false
+        },
+        {
+         "id": "303-2-4",
+         "t": "DC Slide Wire Potentiometer",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Measuring Instruments",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "303-3-1",
+         "t": "Electronic Multimeter",
+         "ready": false
+        },
+        {
+         "id": "303-3-2",
+         "t": "Digital Voltmeter (Potentiometric Type)",
+         "ready": false
+        },
+        {
+         "id": "303-3-3",
+         "t": "Q-Meter",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Oscilloscopes",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "303-4-1",
+         "t": "CRO Block Diagram and Cathode Ray Tube",
+         "ready": false
+        },
+        {
+         "id": "303-4-2",
+         "t": "Measurements using CRO and Lissajous Patterns",
+         "ready": false
+        },
+        {
+         "id": "303-4-3",
+         "t": "Dual Trace CRO and DSO",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Transducers",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "303-5-1",
+         "t": "Transducers: Definition, Types and Selection",
+         "ready": false
+        },
+        {
+         "id": "303-5-2",
+         "t": "RTD, Thermocouple and Thermistor",
+         "ready": false
+        },
+        {
+         "id": "303-5-3",
+         "t": "LVDT, Strain Gauge, Load Cell and Piezoelectric Transducer",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "304",
+     "paper": "7459",
+     "name": "Electric Circuits & Network",
+     "units": [
+      {
+       "n": 1,
+       "name": "Basics of Electric Circuits and Network Analysis",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "304-1-1",
+         "t": "Current, Voltage, Power; R, L, C; Ohm's Law",
+         "ready": false
+        },
+        {
+         "id": "304-1-2",
+         "t": "Series & Parallel Circuits, Voltage and Current Division",
+         "ready": false
+        },
+        {
+         "id": "304-1-3",
+         "t": "Mesh Analysis",
+         "ready": false
+        },
+        {
+         "id": "304-1-4",
+         "t": "Node Analysis",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Network Theorems",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "304-2-1",
+         "t": "Superposition Theorem",
+         "ready": false
+        },
+        {
+         "id": "304-2-2",
+         "t": "Thevenin's and Norton's Theorems",
+         "ready": false
+        },
+        {
+         "id": "304-2-3",
+         "t": "Maximum Power Transfer and Reciprocity Theorems",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Time Domain and Frequency Domain Analysis",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "304-3-1",
+         "t": "RC and RL Circuits: Charging, Discharging, Transients",
+         "ready": false
+        },
+        {
+         "id": "304-3-2",
+         "t": "Laplace Transform in Circuit Analysis",
+         "ready": false
+        },
+        {
+         "id": "304-3-3",
+         "t": "Impedance, Reactance and Phasors in AC Circuits",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Basics of Filter Circuits",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "304-4-1",
+         "t": "Filters, Decibel, 3-dB Bandwidth",
+         "ready": false
+        },
+        {
+         "id": "304-4-2",
+         "t": "Low-pass, High-pass, Band-pass and Band-stop Filters",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Two-Port Networks",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "304-5-1",
+         "t": "Two-Port Networks: Z and Y Parameters",
+         "ready": false
+        },
+        {
+         "id": "304-5-2",
+         "t": "Transmission (ABCD) Parameters",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "305",
+     "paper": "7460",
+     "name": "Principles of Electronic Communication",
+     "units": [
+      {
+       "n": 1,
+       "name": "Signals, Spectrum and Noise",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "305-1-1",
+         "t": "Electromagnetic Spectrum; Wired and Wireless Communication",
+         "ready": false
+        },
+        {
+         "id": "305-1-2",
+         "t": "Signals: Time & Frequency Domain, Classification",
+         "ready": false
+        },
+        {
+         "id": "305-1-3",
+         "t": "Noise: Sources, SNR and Noise Figure",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Amplitude and Frequency Modulation",
+       "marks": 16,
+       "topics": [
+        {
+         "id": "305-2-1",
+         "t": "Communication System and Need for Modulation",
+         "ready": false
+        },
+        {
+         "id": "305-2-2",
+         "t": "AM, DSB-SC, SSB: Modulation Index, Bandwidth, Power",
+         "ready": false
+        },
+        {
+         "id": "305-2-3",
+         "t": "Frequency Modulation and Phase Modulation; FM vs AM",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Generation and Detection, Receivers",
+       "marks": 16,
+       "topics": [
+        {
+         "id": "305-3-1",
+         "t": "AM Transmitter: Low and High Level Modulation; Balanced Modulator",
+         "ready": false
+        },
+        {
+         "id": "305-3-2",
+         "t": "Diode Detector and Superheterodyne Receiver",
+         "ready": false
+        },
+        {
+         "id": "305-3-3",
+         "t": "FM Generation and Foster-Seeley Discriminator",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Pulse Modulation and PCM",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "305-4-1",
+         "t": "Pulse Analog Modulation",
+         "ready": false
+        },
+        {
+         "id": "305-4-2",
+         "t": "Sampling Theorem and Types of Sampling",
+         "ready": false
+        },
+        {
+         "id": "305-4-3",
+         "t": "PCM: Quantization, Encoding and Companding",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Optical Fiber Communication",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "305-5-1",
+         "t": "Light Propagation in Fiber; OFC System Block Diagram",
+         "ready": false
+        },
+        {
+         "id": "305-5-2",
+         "t": "Fiber Types, Acceptance Angle and Numerical Aperture",
+         "ready": false
+        },
+        {
+         "id": "305-5-3",
+         "t": "Losses and Dispersion in Optical Fiber",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5",
+   "name": "Semester V",
+   "subjects": [
+    {
+     "code": "501",
+     "paper": "7466",
+     "name": "Embedded System",
+     "units": [
+      {
+       "n": 1,
+       "name": "Embedded C and Operators for Arduino",
+       "marks": 20,
+       "topics": [
+        {
+         "id": "501-1-1",
+         "t": "Embedded System: Definition, Characteristics, Block Diagram",
+         "ready": false
+        },
+        {
+         "id": "501-1-2",
+         "t": "Arduino IDE and Boot-loading",
+         "ready": false
+        },
+        {
+         "id": "501-1-3",
+         "t": "Embedded C Data Types and Operators",
+         "ready": false
+        },
+        {
+         "id": "501-1-4",
+         "t": "Serial Monitor and Basic Program Structure",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Embedded C Control Structures",
+       "marks": 18,
+       "topics": [
+        {
+         "id": "501-2-1",
+         "t": "Loops: for, while, do-while",
+         "ready": false
+        },
+        {
+         "id": "501-2-2",
+         "t": "Branching: if-else and switch-case",
+         "ready": false
+        },
+        {
+         "id": "501-2-3",
+         "t": "Difference between C and Embedded C",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Introduction to Arduino Mega",
+       "marks": 18,
+       "topics": [
+        {
+         "id": "501-3-1",
+         "t": "Arduino Boards: Mega, Uno, Nano Comparison",
+         "ready": false
+        },
+        {
+         "id": "501-3-2",
+         "t": "Arduino Mega 2560 Pins and Ports",
+         "ready": false
+        },
+        {
+         "id": "501-3-3",
+         "t": "Interfacing LED, 7-Segment Display and Push Button",
+         "ready": false
+        },
+        {
+         "id": "501-3-4",
+         "t": "Interfacing Temperature, Ultrasonic and IR Sensors",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Communication with Arduino",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "501-4-1",
+         "t": "Parallel and Serial Data Transfer",
+         "ready": false
+        },
+        {
+         "id": "501-4-2",
+         "t": "UART, SPI and I2C Communication",
+         "ready": false
+        },
+        {
+         "id": "501-4-3",
+         "t": "Interrupts and Timers; RFID, Bluetooth, Wi-Fi Modules",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "502",
+     "paper": "7467",
+     "name": "Mobile & Wireless Communication",
+     "units": [
+      {
+       "n": 1,
+       "name": "Cellular Systems and Evolution of 2G to 5G",
+       "marks": 24,
+       "topics": [
+        {
+         "id": "502-1-1",
+         "t": "Basic Cellular System and Services of 2G/3G/4G/5G",
+         "ready": false
+        },
+        {
+         "id": "502-1-2",
+         "t": "Frequency Reuse, Handoff, Interference, Cell Splitting",
+         "ready": false
+        },
+        {
+         "id": "502-1-3",
+         "t": "GSM Network Architecture",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Wireless Propagation",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "502-2-1",
+         "t": "Link Budget and Free-Space Path Loss",
+         "ready": false
+        },
+        {
+         "id": "502-2-2",
+         "t": "Reflection, Diffraction, Scattering, Doppler Effect",
+         "ready": false
+        },
+        {
+         "id": "502-2-3",
+         "t": "Fading, Multipath and Shadowing",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Diversity, Channel Capacity and MIMO",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "502-3-1",
+         "t": "Space Diversity, Delay Spread, Coherence Bandwidth",
+         "ready": false
+        },
+        {
+         "id": "502-3-2",
+         "t": "Equalization and Shannon Capacity",
+         "ready": false
+        },
+        {
+         "id": "502-3-3",
+         "t": "MIMO",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "CDMA, OFDMA and LTE",
+       "marks": 22,
+       "topics": [
+        {
+         "id": "502-4-1",
+         "t": "TDMA, FDMA, CDMA and OFDMA",
+         "ready": false
+        },
+        {
+         "id": "502-4-2",
+         "t": "LTE 4G Network Architecture",
+         "ready": false
+        },
+        {
+         "id": "502-4-3",
+         "t": "Features of 4G and 5G; Comparison of 2G to 5G",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "511",
+     "paper": "7468",
+     "name": "Industrial Automation",
+     "elective": "Elective I (511 or 512)",
+     "units": [
+      {
+       "n": 1,
+       "name": "Industrial Automation Overview and Data Acquisition",
+       "marks": 20,
+       "topics": [
+        {
+         "id": "511-1-1",
+         "t": "Need, Types and Hierarchy of Automation",
+         "ready": false
+        },
+        {
+         "id": "511-1-2",
+         "t": "Architecture of Industrial Automation Systems",
+         "ready": false
+        },
+        {
+         "id": "511-1-3",
+         "t": "Data Acquisition System (DAS)",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Control Generation",
+       "marks": 15,
+       "topics": [
+        {
+         "id": "511-2-1",
+         "t": "Automatic Control System and PID Control",
+         "ready": false
+        },
+        {
+         "id": "511-2-2",
+         "t": "Feed Forward and Ratio Control",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Sequential Control and PLC",
+       "marks": 20,
+       "topics": [
+        {
+         "id": "511-3-1",
+         "t": "Sequence Control and Relay Ladder Logic",
+         "ready": false
+        },
+        {
+         "id": "511-3-2",
+         "t": "PLC Hardware and Programming Languages",
+         "ready": false
+        },
+        {
+         "id": "511-3-3",
+         "t": "Ladder Programs: Traffic Light and Stepper Motor",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Industrial Control Applications",
+       "marks": 15,
+       "topics": [
+        {
+         "id": "511-4-1",
+         "t": "Hydraulic and Pneumatic Control Systems",
+         "ready": false
+        },
+        {
+         "id": "511-4-2",
+         "t": "Variable Speed Drives and CNC Machines",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "512",
+     "paper": "7469",
+     "name": "Control System & PLC",
+     "elective": "Elective I (511 or 512)",
+     "units": [
+      {
+       "n": 1,
+       "name": "Basics of Control System",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "512-1-1",
+         "t": "Signals and Systems: Classification",
+         "ready": false
+        },
+        {
+         "id": "512-1-2",
+         "t": "Open Loop and Closed Loop Control Systems",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Transfer Function and Laplace Transform",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "512-2-1",
+         "t": "Laplace Transform and Transfer Function",
+         "ready": false
+        },
+        {
+         "id": "512-2-2",
+         "t": "Block Diagram Reduction",
+         "ready": false
+        },
+        {
+         "id": "512-2-3",
+         "t": "Signal Flow Graph and Mason's Gain Formula",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Time Domain Analysis",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "512-3-1",
+         "t": "Standard Test Inputs, Poles and Zeros",
+         "ready": false
+        },
+        {
+         "id": "512-3-2",
+         "t": "First and Second Order System Response",
+         "ready": false
+        },
+        {
+         "id": "512-3-3",
+         "t": "Time Response Specifications and Steady State Error",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Stability Analysis",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "512-4-1",
+         "t": "Concept of Stability and Routh's Criterion",
+         "ready": false
+        },
+        {
+         "id": "512-4-2",
+         "t": "PI, PD and PID Controllers",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Fundamentals of PLC",
+       "marks": 22,
+       "topics": [
+        {
+         "id": "512-5-1",
+         "t": "PLC Block Diagram, Classification and Scan Cycle",
+         "ready": false
+        },
+        {
+         "id": "512-5-2",
+         "t": "PLC Input and Output Modules",
+         "ready": false
+        },
+        {
+         "id": "512-5-3",
+         "t": "PLC Addressing and Instruction Set",
+         "ready": false
+        },
+        {
+         "id": "512-5-4",
+         "t": "Ladder Programming",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "521",
+     "paper": "7470",
+     "name": "Microwave & Radar",
+     "elective": "Elective II (521 or 522)",
+     "units": [
+      {
+       "n": 1,
+       "name": "Introduction to Microwaves",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "521-1-1",
+         "t": "Microwaves: Frequency Range, Effects, Applications",
+         "ready": false
+        },
+        {
+         "id": "521-1-2",
+         "t": "Transmission Lines and Characteristic Impedance",
+         "ready": false
+        },
+        {
+         "id": "521-1-3",
+         "t": "Waveguides and Modes",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Passive and Active Microwave Devices",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "521-2-1",
+         "t": "Waveguide Tees, Directional Coupler, Circulator, Isolator",
+         "ready": false
+        },
+        {
+         "id": "521-2-2",
+         "t": "Gunn Diode",
+         "ready": false
+        },
+        {
+         "id": "521-2-3",
+         "t": "Two Cavity Klystron and Reflex Klystron",
+         "ready": false
+        },
+        {
+         "id": "521-2-4",
+         "t": "Magnetron",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Introduction to Antennas",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "521-3-1",
+         "t": "Antenna Parameters",
+         "ready": false
+        },
+        {
+         "id": "521-3-2",
+         "t": "Grounded and Ungrounded Antennas",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Types of Antenna",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "521-4-1",
+         "t": "Half Wave Dipole and Folded Dipole",
+         "ready": false
+        },
+        {
+         "id": "521-4-2",
+         "t": "Yagi-Uda and Parabolic Reflector Antennas",
+         "ready": false
+        },
+        {
+         "id": "521-4-3",
+         "t": "Rectangular Micro-strip Patch Antenna",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "RADAR Fundamentals",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "521-5-1",
+         "t": "RADAR Block Diagram and Range Equation",
+         "ready": false
+        },
+        {
+         "id": "521-5-2",
+         "t": "Functions and Parameters of RADAR",
+         "ready": false
+        },
+        {
+         "id": "521-5-3",
+         "t": "Doppler Effect, Applications and PPI Display",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "522",
+     "paper": "7471",
+     "name": "Semiconductor Packaging & Testing",
+     "elective": "Elective II (521 or 522)",
+     "units": [
+      {
+       "n": 1,
+       "name": "Overview of Electronic Systems Packaging",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "522-1-1",
+         "t": "Functions and Hierarchy of Electronic Packaging",
+         "ready": false
+        },
+        {
+         "id": "522-1-2",
+         "t": "Packaging Materials",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Electrical Issues in Packaging",
+       "marks": 12,
+       "topics": [
+        {
+         "id": "522-2-1",
+         "t": "Signal and Power Distribution, EMI",
+         "ready": false
+        },
+        {
+         "id": "522-2-2",
+         "t": "Interconnect Parasitics and Hybrid Circuits",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Chip Level Packaging",
+       "marks": 16,
+       "topics": [
+        {
+         "id": "522-3-1",
+         "t": "Wire Bonding, TAB and Flip Chip",
+         "ready": false
+        },
+        {
+         "id": "522-3-2",
+         "t": "Wafer Level, Single Chip, Multi Chip and SiP",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "PCB, Surface Mount Technology and Thermal Considerations",
+       "marks": 16,
+       "topics": [
+        {
+         "id": "522-4-1",
+         "t": "PCB Anatomy and Fabrication",
+         "ready": false
+        },
+        {
+         "id": "522-4-2",
+         "t": "SMT and Through Hole Assembly",
+         "ready": false
+        },
+        {
+         "id": "522-4-3",
+         "t": "Thermal Management",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Testing",
+       "marks": 14,
+       "topics": [
+        {
+         "id": "522-5-1",
+         "t": "Reliability and Failure Mechanisms",
+         "ready": false
+        },
+        {
+         "id": "522-5-2",
+         "t": "Electrical Testing and Design for Testability",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "531",
+     "paper": "7601",
+     "name": "Renewable Energy Technologies",
+     "elective": "Elective III (531 or 532)",
+     "units": [
+      {
+       "n": 1,
+       "name": "Introduction",
+       "topics": [
+        {
+         "id": "531-1-1",
+         "t": "World Energy Use, Resources and Renewable Scenario in India",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Solar Energy",
+       "topics": [
+        {
+         "id": "531-2-1",
+         "t": "Solar Radiation, Collectors and Thermal Applications",
+         "ready": false
+        },
+        {
+         "id": "531-2-2",
+         "t": "Solar PV Cells and PV Power Generation",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Wind Energy",
+       "topics": [
+        {
+         "id": "531-3-1",
+         "t": "Wind Energy Systems, Site Selection and Wind Turbine Generator",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 4,
+       "name": "Bio-Energy",
+       "topics": [
+        {
+         "id": "531-4-1",
+         "t": "Biomass, Biogas Plants, Ethanol and Biodiesel",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 5,
+       "name": "Other Renewable Energy Sources",
+       "topics": [
+        {
+         "id": "531-5-1",
+         "t": "Tidal, Wave, OTEC, Small Hydro and Geothermal Energy",
+         "ready": false
+        },
+        {
+         "id": "531-5-2",
+         "t": "Hydrogen, Fuel Cells and Hybrid Systems",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "code": "532",
+     "paper": "7602",
+     "name": "Internet of Things",
+     "elective": "Elective III (531 or 532)",
+     "units": [
+      {
+       "n": 1,
+       "name": "Introduction to Internet of Things",
+       "topics": [
+        {
+         "id": "532-1-1",
+         "t": "IoT: Definition, Technology Trends and Impact on Society",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 2,
+       "name": "Design Considerations of IoT",
+       "topics": [
+        {
+         "id": "532-2-1",
+         "t": "Embedded System Components and Core IoT Hardware",
+         "ready": false
+        }
+       ]
+      },
+      {
+       "n": 3,
+       "name": "Interfacing by IoT Devices",
+       "topics": [
+        {
+         "id": "532-3-1",
+         "t": "Hardware-Software Interaction, Networking and Internet Structure",
+         "ready": false
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

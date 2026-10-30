@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>E&amp;TC Notes Library</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="RGPV Diploma E&TC notes in Hindi with diagrams, derivations and PDF download.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martel:wght@700;800&family=Mukta:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+
+/* Layout: control panel (sticky) beside an exam answer-sheet with a red margin, on faint graph paper */
+:root{
+  --bg:#eef1f5; --paper:#fbfcfd; --grid:#e8edf4; --ink:#172033; --muted:#5b667a;
+  --line:#d3dbe6; --accent:#1f4fb8; --accent-ink:#ffffff; --soft:#e5ecfa; --red:#c0392b;
+  --code:#f1f4f8;
+  --f-display:"Martel","Noto Serif Devanagari",Georgia,serif;
+  --f-body:"Mukta","Noto Sans Devanagari","Nirmala UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131b; --paper:#141b26; --grid:#19212e; --ink:#e2e8f2; --muted:#94a1b5;
+  --line:#2a3546; --accent:#86a9ff; --accent-ink:#0b1220; --soft:#1c2740; --red:#ff7f70;
+  --code:#1a2230; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --paper:#141b26; --grid:#19212e; --ink:#e2e8f2; --muted:#94a1b5;
+  --line:#2a3546; --accent:#86a9ff; --accent-ink:#0b1220; --soft:#1c2740; --red:#ff7f70;
+  --code:#1a2230; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:1.65rem;line-height:1.2;margin:0;text-wrap:balance}
+.brand span{color:var(--accent)}
+.tag{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media (min-width:920px){.layout{grid-template-columns:340px minmax(0,1fr)} .panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}}
+
+/* panel */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:8px;padding:4px;gap:4px}
+.tabs button{font:600 .95rem var(--f-body);border:0;border-radius:6px;padding:8px 6px;background:transparent;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lbl b{font-family:var(--f-body);font-size:.85rem;letter-spacing:0;text-transform:none;font-weight:600;color:var(--ink)}
+input[type=text],textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:9px 11px;width:100%}
+textarea{min-height:96px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 .9rem var(--f-body);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip.num{font-family:var(--f-mono);font-size:.85rem;min-width:42px}
+.chip.sug{font-size:.82rem;padding:3px 10px;color:var(--muted)}
+.chip.sug:hover{color:var(--ink);border-color:var(--accent)}
+.scheme{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:.9rem;display:flex;flex-direction:column;gap:2px}
+.scheme .w{font-family:var(--f-mono);font-size:.78rem;color:var(--accent);font-variant-numeric:tabular-nums}
+.go{font:700 1rem var(--f-body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:11px 14px;cursor:pointer}
+.go:disabled{opacity:.5;cursor:not-allowed}
+.hint{font-size:.82rem;color:var(--muted);margin:0}
+
+/* output */
+.out{display:flex;flex-direction:column;gap:10px;min-width:0}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;justify-content:space-between}
+.status{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.status.live .dot{background:var(--accent);animation:pulse 1s infinite}
+.status.done .dot{background:#2e9e5b}
+.status.err .dot{background:var(--red)}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.status.live .dot{animation:none}}
+.actions{display:flex;flex-wrap:wrap;gap:6px}
+.btn{font:500 .88rem var(--f-body);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:7px;padding:5px 11px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+
+.sheet{display:grid;grid-template-columns:58px minmax(0,1fr);background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;border:1px solid var(--line);border-radius:4px;min-height:420px}
+.margin{border-right:2px solid var(--red);padding:22px 6px;text-align:center;font-family:var(--f-mono);font-size:.82rem;color:var(--red);display:flex;flex-direction:column;gap:6px;font-variant-numeric:tabular-nums}
+.page{padding:22px clamp(14px,3vw,36px) 32px;min-width:0}
+.qhead{border-bottom:1px dashed var(--line);padding-bottom:12px;margin-bottom:14px;display:flex;flex-direction:column;gap:4px}
+.qhead .meta{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.qhead h1{font-family:var(--f-display);font-weight:800;font-size:1.3rem;line-height:1.5;margin:0;text-wrap:balance}
+.qhead .ex{align-self:flex-start;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;background:var(--soft);color:var(--accent);border-radius:4px;padding:2px 8px}
+
+.md{font-size:1.06rem;line-height:1.8;max-width:72ch;overflow-wrap:anywhere}
+.md>*:first-child{margin-top:0}
+.md h1,.md h2{font-family:var(--f-display);font-weight:800;font-size:1.3rem;line-height:1.5;margin:1.6em 0 .4em;text-wrap:balance}
+.md h3{font-family:var(--f-display);font-weight:700;font-size:1.1rem;margin:1.3em 0 .3em}
+.md h4{font-size:1.02rem;margin:1em 0 .2em}
+.md p{margin:.55em 0}
+.md ul,.md ol{padding-left:1.4em;margin:.5em 0}
+.md li{margin:.2em 0}
+.md strong{font-weight:700}
+.md blockquote{margin:.8em 0;padding:.4em 1em;border-left:3px solid var(--accent);background:var(--soft);border-radius:0 6px 6px 0}
+.md code{font-family:var(--f-mono);font-size:.86em;background:var(--code);padding:1px 5px;border-radius:4px}
+.md pre{background:var(--code);border:1px solid var(--line);border-radius:7px;padding:12px;overflow-x:auto;line-height:1.5}
+.md pre code{background:none;padding:0}
+.tbl{overflow-x:auto;margin:.8em 0}
+.md table{border-collapse:collapse;font-size:.95rem;background:var(--paper)}
+.md th,.md td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+.md th{background:var(--soft);font-weight:600}
+.eq{display:block;overflow-x:auto;overflow-y:hidden;margin:.6em 0;padding:2px 0}
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%}
+.fig{margin:1em 0 .2em;overflow-x:auto;color:var(--ink);text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px}
+.fig svg{width:100%;max-width:620px;height:auto;display:inline-block;font-family:var(--f-body)}
+.fig svg .hl{stroke:var(--red)}
+.fig svg text.hl,.fig svg [fill="currentColor"].hl,.fig svg .hl [fill="currentColor"]{fill:var(--red)}
+.fig svg .hl text{fill:var(--ink)}
+.fig svg .term{fill:var(--paper)}
+.fig svg .grid{stroke:var(--muted);opacity:.5}
+.fig + p:has(> em:only-child){text-align:center;color:var(--muted);font-size:.92rem;margin-top:.3em}
+.btn-pdf{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn-pdf:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:progress}
+.pdfdoc{--bg:#ffffff;--paper:#ffffff;--grid:#ffffff;--ink:#172033;--muted:#5b667a;--line:#d3dbe6;--soft:#eef2fb;--red:#c0392b;--code:#f3f5f8;--accent:#1f4fb8;--accent-ink:#ffffff;
+  width:100%;background:#ffffff;color:#172033;font-family:var(--f-body);font-size:16px;line-height:1.7}
+.pdfdoc .pdf-head{border-bottom:2px solid #1f4fb8;padding-bottom:10px;margin-bottom:18px}
+.pdfdoc .pdf-meta{font-family:var(--f-body);font-size:12px;font-weight:600;color:#5b667a}
+.pdfdoc .pdf-title{font-family:var(--f-display);font-weight:800;font-size:21px;line-height:1.55;margin-top:4px}
+.pdfdoc .md{max-width:none;font-size:16px;line-height:1.75}
+.pdfdoc .fig{border:1px solid #d3dbe6;background:#ffffff;color:#172033;overflow:visible}
+.pdfdoc .eq,.pdfdoc .tbl,.pdfdoc pre{overflow:visible}
+.pdfdoc mjx-container{color:#172033}
+.pdfdoc .pdf-end{margin-top:24px;padding-top:8px;border-top:1px solid #d3dbe6;font-size:12px;color:#5b667a}
+.fig-warn{margin:-.1em 0 .6em;font-size:.85rem;color:var(--red);text-align:center}
+.pending{border:1px dashed var(--line);border-radius:8px;padding:18px;text-align:center;color:var(--muted);font-size:.92rem;margin:1em 0}
+.thinking{color:var(--muted);display:flex;flex-direction:column;gap:6px;padding:20px 0}
+.thinking b{color:var(--ink);font-weight:600}
+.foot{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;font-size:.82rem;color:var(--muted)}
+.wc{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.wc.ok{color:#2e9e5b}
+.note{margin-top:14px;padding:8px 12px;border-radius:6px;background:var(--soft);font-size:.9rem}
+.note.err{background:transparent;border:1px solid var(--red);color:var(--red)}
+
+@media (max-width:520px){.sheet{grid-template-columns:40px minmax(0,1fr)} .margin{font-size:.72rem;padding:18px 2px} .brand{font-size:1.4rem} .md{font-size:1.02rem}}
+
+/* ---------- library ---------- */
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+.lib-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 20px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.lib-top a{color:inherit;text-decoration:none}
+.lib-top .sub{font-size:.9rem;color:var(--muted);margin-top:2px}
+.stat{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+.view{display:flex;flex-direction:column;gap:18px}
+.searchrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+#search{flex:1 1 280px;font:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:11px 14px}
+#search:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.semtabs{display:flex;gap:6px;flex-wrap:wrap}
+.semtab{font:600 .95rem var(--f-body);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 16px;cursor:pointer}
+.semtab[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.subjects{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.subj{display:flex;flex-direction:column;gap:6px;padding:14px 16px;background:var(--paper);border:1px solid var(--line);border-radius:10px;color:inherit;text-decoration:none;min-width:0}
+.subj:hover{border-color:var(--accent)}
+.subj:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.subj .code{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.05em;color:var(--muted)}
+.subj .sname{font-family:var(--f-display);font-weight:800;font-size:1.08rem;line-height:1.45;text-wrap:balance}
+.subj .elect{font-size:.8rem;color:var(--accent)}
+.subj.soon .sname{color:var(--muted)}
+.prog{display:flex;flex-direction:column;gap:4px;margin-top:auto;padding-top:6px}
+.bar{height:5px;border-radius:3px;background:var(--grid);overflow:hidden}
+.bar span{display:block;height:100%;background:#2e9e5b}
+.pnum{font-size:.8rem;color:var(--muted)}
+.results{display:flex;flex-direction:column;gap:8px}
+.hit{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:10px 14px;background:var(--paper);border:1px solid var(--line);border-radius:8px;color:inherit;text-decoration:none}
+.hit:hover{border-color:var(--accent)}
+.hit .hs{grid-column:1;font-size:.78rem;color:var(--muted)}
+.hit .ht{grid-column:1;font-weight:600}
+.hit .chip{grid-column:2;grid-row:1 / span 2}
+.hit.na .ht{color:var(--muted)}
+.empty{color:var(--muted)}
+.chip{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--muted);white-space:nowrap}
+.chip.ok{border-color:#2e9e5b;color:#2e9e5b}
+.crumb{font-size:.88rem;color:var(--muted)}
+.crumb a{color:var(--accent);text-decoration:none}
+.crumb span{margin:0 4px}
+.stitle{font-family:var(--f-display);font-weight:800;font-size:1.5rem;line-height:1.4;margin:0;text-wrap:balance}
+.smeta{color:var(--muted);font-size:.9rem;margin:-10px 0 0}
+.units{display:flex;flex-direction:column;gap:14px}
+.unit{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.uhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 14px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--soft)}
+.uhead .un{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.uhead h3{font-family:var(--f-display);font-weight:700;font-size:1.05rem;margin:2px 0 0}
+.uright{display:flex;gap:10px;align-items:center}
+.marks{font-family:var(--f-mono);font-size:.78rem;color:var(--red);font-variant-numeric:tabular-nums}
+.tlist{list-style:none;margin:0;padding:0}
+.tlist li + li{border-top:1px solid var(--line)}
+.tlist a,.tlist .na{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:10px 16px;color:inherit;text-decoration:none}
+.tlist a:hover{background:var(--soft)}
+.tlist a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.tn{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.tt{display:flex;flex-direction:column;min-width:0}
+.te{font-weight:600;line-height:1.4}
+.th{font-size:.88rem;color:var(--muted)}
+.na .te{color:var(--muted);font-weight:500}
+.tbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.qhead .hsub{font-size:1rem;color:var(--muted)}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pg{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:inherit;text-decoration:none;min-width:0}
+.pg:hover{border-color:var(--accent)}
+.pg span{font-size:.8rem;color:var(--accent);font-weight:600}
+.pg b{font-weight:600;font-size:.92rem;line-height:1.4}
+.pg.nx{text-align:right}
+.lib-foot{border-top:1px solid var(--line);padding-top:12px;font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+.lib-foot a{color:var(--accent)}
+.pdfdoc .pdf-hsub{font-size:15px;color:#5b667a;margin-top:2px}
+@media (max-width:520px){.tlist a,.tlist .na{grid-template-columns:36px 1fr;}.tlist .chip{grid-column:2;justify-self:start}.pager{grid-template-columns:1fr}.pg.nx{text-align:left}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="lib-top">
+    <a href="#home"><h1 class="brand">E&amp;TC <span>हिंदी नोट्स</span></h1><div class="sub">RGPV Diploma Wing · Electronics &amp; Telecommunication · Session 2025-26</div></a>
+    <div class="stat" id="stat"></div>
+  </header>
+
+  <section class="view" id="v-home">
+    <div class="searchrow"><input type="search" id="search" placeholder="Search a topic, e.g. rectifier, zener, flip-flop" autocomplete="off" aria-label="Search topics"></div>
+    <div class="semtabs" id="semtabs"></div>
+    <div class="results" id="results" hidden></div>
+    <div class="subjects" id="subjects"></div>
+    <div class="msgbox"></div>
+  </section>
+
+  <section class="view" id="v-subject" hidden>
+    <div class="crumb" id="s-crumb"></div>
+    <h2 class="stitle" id="s-title"></h2>
+    <p class="smeta" id="s-meta"></p>
+    <div class="msgbox"></div>
+    <div class="units" id="units"></div>
+  </section>
+
+  <section class="view" id="v-topic" hidden>
+    <div class="tbar"><div class="crumb" id="t-crumb"></div><button class="btn btn-pdf" id="pdfbtn" type="button">Download PDF</button></div>
+    <div class="msgbox"></div>
+    <article class="sheet" id="sheet">
+      <div class="margin" id="margin"></div>
+      <div class="page">
+        <div class="qhead" id="qhead"></div>
+        <div class="md" id="md"></div>
+      </div>
+    </article>
+    <nav class="pager" id="pager" aria-label="Topics"></nav>
+  </section>
+
+  <footer class="lib-foot">
+    <span>Notes are written to match the RGPV Diploma syllabus. Always check with your textbook before the exam.</span>
+    <a class="req" hidden target="_blank" rel="noopener">Request a topic / report a mistake</a>
+  </footer>
+</div>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: false },
+  svg: { fontCache: 'local' },
+  startup: { typeset: false }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js"></script>
+<script>
+(() => {
+/* ---------- diagram renderers: circuit / plot / blocks ---------- */
+const DIAG = (() => {
+const escT = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const f1 = n => (Math.round(n*10)/10).toString();
+const num = v => { const n = typeof v === "number" ? v : compile(String(v))(0); if(!isFinite(n)) throw new Error("bad number"); return n; };
+let MK = 0;
+
+/* label with one trailing subscript: R_L, V_{CC} */
+function sub(text){
+  text = String(text ?? "");
+  const m = text.match(/^([^_]*)_\{?([^}]*)\}?$/);
+  if(!m || !m[2]) return escT(text);
+  return escT(m[1]) + `<tspan dy="4" font-size="10">${escT(m[2])}</tspan>`;
+}
+function T(x, y, txt, anchor, size){
+  const a = ["start","middle","end"].includes(anchor) ? anchor : "middle";
+  return `<text x="${f1(x)}" y="${f1(y)}" text-anchor="${a}" fill="currentColor" stroke="none" font-size="${size||13}">${sub(txt)}</text>`;
+}
+function head(tx, ty, ux, uy, s){
+  s = s || 8; const nx = -uy, ny = ux;
+  const bx = tx - ux*s, by = ty - uy*s;
+  return `<path d="M${f1(tx)} ${f1(ty)} L${f1(bx+nx*s*0.45)} ${f1(by+ny*s*0.45)} L${f1(bx-nx*s*0.45)} ${f1(by-ny*s*0.45)} Z" fill="currentColor" stroke="none"/>`;
+}
+
+/* ---------- expression compiler for plots ---------- */
+const FN = { sin:Math.sin, cos:Math.cos, tan:Math.tan, asin:Math.asin, acos:Math.acos, atan:Math.atan, atan2:Math.atan2,
+  sinh:Math.sinh, cosh:Math.cosh, tanh:Math.tanh, exp:Math.exp, log:Math.log, ln:Math.log, log10:Math.log10, sqrt:Math.sqrt,
+  abs:Math.abs, max:Math.max, min:Math.min, floor:Math.floor, ceil:Math.ceil, round:Math.round, sign:Math.sign, pow:Math.pow,
+  mod:(a,b)=>((a%b)+b)%b, step:x=>x>=0?1:0, u:x=>x>=0?1:0, clamp:(x,a,b)=>Math.min(Math.max(x,a),b),
+  square:x=>Math.sin(x)>=0?1:-1, tri:x=>(2/Math.PI)*Math.asin(Math.sin(x)), saw:x=>2*(x/(2*Math.PI)-Math.floor(x/(2*Math.PI)+0.5)) };
+const K = { pi:Math.PI, e:Math.E };
+function compile(src){
+  const s = String(src).replace(/π/g,"pi").replace(/ω/g,"").replace(/\*\*/g,"^");
+  const toks = []; const re = /\s*(\d*\.\d+(?:[eE][+-]?\d+)?|\d+(?:[eE][+-]?\d+)?|[A-Za-z_][A-Za-z_0-9]*|[-+*/^(),])/y;
+  let m; re.lastIndex = 0;
+  while(re.lastIndex < s.length){ const at = re.lastIndex; m = re.exec(s); if(!m){ if(/^\s*$/.test(s.slice(at))) break; throw new Error("bad expr"); } toks.push(m[1]); }
+  let i = 0;
+  const peek = () => toks[i], next = () => toks[i++];
+  const isStart = t => t !== undefined && (/^[\d.]/.test(t) || /^[A-Za-z_]/.test(t) || t === "(");
+  function expr(){ let v = term(); while(peek()==="+"||peek()==="-"){ const op=next(), a=v, b=term(); v = op==="+" ? x=>a(x)+b(x) : x=>a(x)-b(x); } return v; }
+  function term(){ let v = unary();
+    while(peek()==="*"||peek()==="/"||isStart(peek())){ const op = (peek()==="*"||peek()==="/") ? next() : "*"; const a=v, b=unary(); v = op==="*" ? x=>a(x)*b(x) : x=>a(x)/b(x); }
+    return v; }
+  function unary(){ if(peek()==="-"){ next(); const a=unary(); return x=>-a(x); } if(peek()==="+"){ next(); return unary(); } return power(); }
+  function power(){ const a = primary(); if(peek()==="^"){ next(); const b = unary(); return x=>Math.pow(a(x), b(x)); } return a; }
+  function primary(){
+    const t = next();
+    if(t === undefined) throw new Error("end");
+    if(/^[\d.]/.test(t)){ const v = parseFloat(t); return ()=>v; }
+    if(t === "("){ const v = expr(); if(next()!==")") throw new Error(")"); return v; }
+    if(/^[A-Za-z_]/.test(t)){
+      const k = t.toLowerCase();
+      if(peek()==="("){ next(); const args=[]; if(peek()!==")"){ args.push(expr()); while(peek()===","){ next(); args.push(expr()); } } if(next()!==")") throw new Error(")");
+        const fn = FN[k]; if(!fn) throw new Error("fn "+t); return x=>fn(...args.map(g=>g(x))); }
+      if(k==="x"||k==="t"||k==="wt"||k==="theta") return x=>x;
+      if(k in K){ const v=K[k]; return ()=>v; }
+      throw new Error("name "+t);
+    }
+    throw new Error("tok "+t);
+  }
+  const f = expr(); if(i < toks.length) throw new Error("trailing");
+  return f;
+}
+
+/* ---------- circuit ---------- */
+const G = 40;
+const BODY = {
+  resistor:[15,'<path d="M-15 0 l2.5 -6 l5 12 l5 -12 l5 12 l5 -12 l5 12 l2.5 -6"/>'],
+  capacitor:[4,'<path d="M-4 -12 V12 M4 -12 V12"/>'],
+  ecap:[5,'<path d="M-4 -12 V12 M6 -12 Q1 0 6 12"/>'],
+  inductor:[16,'<path d="M-16 0 a4 4 0 0 1 8 0 a4 4 0 0 1 8 0 a4 4 0 0 1 8 0 a4 4 0 0 1 8 0"/>'],
+  diode:[8,'<path d="M-8 -8 L-8 8 L8 0 Z M8 -8 V8"/>'],
+  zener:[8,'<path d="M-8 -8 L-8 8 L8 0 Z M4 -10 L8 -8 V8 L12 10"/>'],
+  led:[8,'<path d="M-8 -8 L-8 8 L8 0 Z M8 -8 V8 M-1 -11 l5 -7 M1 -18 h3 v3 M5 -10 l5 -7 M7 -17 h3 v3"/>'],
+  dc:[5,'<path d="M-4 -6 V6 M4 -13 V13"/>'],
+  switch:[13,'<circle cx="-12" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><path d="M-10 -1 L11 -11"/>'],
+  fuse:[13,'<rect x="-12" y="-5" width="24" height="10"/><path d="M-12 0 H12"/>'],
+  isrc:[14,'<circle r="14"/><path d="M-8 0 H7"/><path d="M8 0 L1 -4 L1 4 Z" fill="currentColor" stroke="none"/>'],
+  ac:[14,'<circle r="14"/>'],
+  vsrc:[14,'<circle r="14"/>'],
+  lamp:[14,'<circle r="14"/><path d="M-10 -10 L10 10 M10 -10 L-10 10"/>'],
+  meter:[14,'<circle r="14"/>']
+};
+const ALIAS = { res:"resistor", r:"resistor", cap:"capacitor", c:"capacitor", polarizedcapacitor:"ecap", electrolytic:"ecap",
+  ind:"inductor", l:"inductor", coil:"inductor", d:"diode", zenerdiode:"zener", source:"ac", acsource:"ac", vac:"ac",
+  vdc:"dc", cell:"dc", battery:"dc", dcsource:"vsrc", currentsource:"isrc", current:"isrc", voltmeter:"meter", ammeter:"meter",
+  ground:"gnd", supply:"vcc", rail:"vdd", vdd:"vcc", vss:"vee", node:"dot", junction:"dot", text:"label",
+  xfmr:"transformer", inverter:"not", buffer:"buf", opamplifier:"opamp", "op-amp":"opamp", nmosfet:"nmos", pmosfet:"pmos" };
+const GATES = ["and","or","not","nand","nor","xor","xnor","buf"];
+const MULTI = ["opamp","npn","pnp","nmos","pmos","transformer","ic", ...GATES];
+const RAILS = ["gnd","vcc","vee"];
+const EPS = 0.02;
+
+function normType(e){ const t = String(e.t || e.type || "").toLowerCase().replace(/[\s_]/g,""); return ALIAS[t] || t; }
+function gp(p){ if(!Array.isArray(p) || p.length < 2) throw new Error("point"); const x = Number(p[0]), y = Number(p[1]); if(!isFinite(x) || !isFinite(y)) throw new Error("point"); return [x, y]; }
+const same = (p,q) => Math.abs(p[0]-q[0]) < EPS && Math.abs(p[1]-q[1]) < EPS;
+function onInterior(p, a, b){
+  const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy; if(L2 < 1e-6) return false;
+  const t = ((p[0]-a[0])*dx + (p[1]-a[1])*dy)/L2;
+  if(t <= 0.01 || t >= 0.99) return false;
+  const cx = a[0]+t*dx, cy = a[1]+t*dy;
+  return Math.hypot(p[0]-cx, p[1]-cy) < EPS;
+}
+function segCross(a,b,c,d){
+  const r=[b[0]-a[0],b[1]-a[1]], s=[d[0]-c[0],d[1]-c[1]], den = r[0]*s[1]-r[1]*s[0];
+  if(Math.abs(den) < 1e-9) return null;
+  const qp=[c[0]-a[0],c[1]-a[1]]; const t=(qp[0]*s[1]-qp[1]*s[0])/den, u=(qp[0]*r[1]-qp[1]*r[0])/den;
+  if(t < -1e-6 || t > 1+1e-6 || u < -1e-6 || u > 1+1e-6) return null;
+  return { p:[a[0]+t*r[0], a[1]+t*r[1]], t, u };
+}
+
+function icLayout(e){
+  const [x,y] = gp(e.at); const S = {};
+  ["left","right","top","bottom"].forEach(k => S[k] = (Array.isArray(e[k]) ? e[k] : []).map(v => { const [n,num] = String(v).split(":"); return { name:n.trim(), num:(num||"").trim() }; }));
+  const w = Math.max(Number(e.w)||3, S.top.length+1, S.bottom.length+1, 2), h = Math.max(Number(e.h)||4, S.left.length+1, S.right.length+1, 2);
+  const pins = [];
+  S.left.forEach((p,i)=>pins.push({...p, side:"left", at:[x, y+1+i]}));
+  S.right.forEach((p,i)=>pins.push({...p, side:"right", at:[x+w, y+1+i]}));
+  S.top.forEach((p,i)=>pins.push({...p, side:"top", at:[x+1+i, y]}));
+  S.bottom.forEach((p,i)=>pins.push({...p, side:"bottom", at:[x+1+i, y+h]}));
+  return { x, y, w, h, pins };
+}
+function gateInputs(e){ const t = e._t; return (t==="not"||t==="buf") ? 1 : Math.min(3, Math.max(2, Number(e.in || e.inputs)||2)); }
+
+/* pins in grid units */
+function pinsOf(e){
+  const t = e._t;
+  if(BODY[t]) return [gp(e.from), gp(e.to)];
+  if(t === "terminal" || RAILS.includes(t)) return [gp(e.at)];
+  if(!MULTI.includes(t)) return [];
+  if(t === "ic") return icLayout(e).pins.map(p=>p.at);
+  const [x,y] = gp(e.at); const m = e.mirror ? -1 : 1;
+  if(t === "opamp") return [[x,y-0.5],[x,y+0.5],[x+2,y]];
+  if(t === "npn" || t === "pnp" || t === "nmos" || t === "pmos") return [[x,y],[x+m,y-1],[x+m,y+1]];
+  if(t === "transformer") return e.ct ? [[x,y],[x,y+2],[x+1,y],[x+1,y+2],[x+1,y+1]] : [[x,y],[x,y+2],[x+1,y],[x+1,y+2]];
+  const n = gateInputs(e);
+  const ins = n===1 ? [[x,y]] : n===2 ? [[x,y-0.5],[x,y+0.5]] : [[x,y-0.5],[x,y],[x,y+0.5]];
+  return [...ins, [x+2,y]];
+}
+/* body boxes (grid units) that wires must not cross */
+function boxOf(e){
+  const t = e._t; if(!MULTI.includes(t)) return null;
+  if(t === "ic"){ const L = icLayout(e); return [L.x, L.y, L.x+L.w, L.y+L.h]; }
+  const [x,y] = gp(e.at); const m = e.mirror ? -1 : 1;
+  if(t === "opamp") return [x+0.3, y-0.85, x+1.7, y+0.85];
+  if(t === "transformer") return [x+0.15, y+0.1, x+0.85, y+1.9];
+  if(GATES.includes(t)) return [x+0.3, y-0.6, x+1.5, y+0.6];
+  const a = x+0.5*m, b = x+0.95*m; return [Math.min(a,b), y-0.35, Math.max(a,b), y+0.35];
+}
+const nameOf = e => (e.label || e.text) ? `${e._t} ${e.label || e.text}` : e._t;
+
+function sidePt(mx, my, ux, uy, off, flip){
+  let px = -uy, py = ux;
+  if(py > 0.01 || (Math.abs(py) <= 0.01 && px < 0)){ px = -px; py = -py; }
+  if(flip){ px = -px; py = -py; }
+  const x = mx + px*off, y = my + py*off;
+  const anchor = px > 0.5 ? "start" : px < -0.5 ? "end" : "middle";
+  return { x, y: y + (py > 0.5 ? 12 : py < -0.5 ? -2 : 4), anchor };
+}
+
+/* ---------- verified textbook circuits ---------- */
+const W = (...p) => ({ t:"wire", path:p });
+const X = (t, from, to, label, o) => Object.assign({ t, from, to, label }, o || {});
+const A = (t, at, o) => Object.assign({ t, at }, o || {});
+const TM = (at, text, pos) => ({ t:"terminal", at, text, pos: pos || "right" });
+const LB = (at, text) => ({ t:"label", at, text });
+const IC555 = at => A("ic", at, { w:3, h:4, label:"555", top:["RST:4","VCC:8"], left:["DIS:7","THR:6","TRIG:2"], right:["OUT:3","CV:5"], bottom:["GND:1"] });
+const TEMPLATES = {
+  hwr: o => [X("ac",[0,2],[0,0],"V_in"), W([0,0],[1,0]), W([0,2],[1,2]), A("transformer",[1,0]),
+    X("diode",[2,0],[3,0],"D",{hl:true}), W([3,0],[8,0]), X("resistor",[6,0],[6,2],"R_L"), W([2,2],[8,2]),
+    ...(o.filter ? [X("ecap",[4,0],[4,2],"C")] : []), TM([8,0],"+"), TM([8,2],"−"), LB([8.5,1],"V_o")],
+  fwr_ct: o => [X("ac",[0,2],[0,0],"V_in"), W([0,0],[1,0]), W([0,2],[1,2]), A("transformer",[1,0],{ct:true}),
+    X("diode",[2,0],[4,0],"D_1",{hl:true}), X("diode",[2,2],[4,2],"D_2",{flip:true,hl:true}), W([4,0],[5,0],[5,2],[4,2]),
+    W([2,1],[3,1]), X("resistor",[3,1],[5,1],"R_L")],
+  bridge: o => [X("ac",[0,5],[0,3],"V_in"), W([0,3],[2,3]), W([0,5],[0,6],[7,6],[7,3],[6,3]),
+    X("diode",[2,3],[4,1],"D_1",{hl:true}), X("diode",[4,5],[6,3],"D_2",{flip:true,hl:true}),
+    X("diode",[6,3],[4,1],"D_3"), X("diode",[4,5],[2,3],"D_4",{flip:true}),
+    W([4,1],[4,2]), X("resistor",[4,2],[4,4],"R_L"), W([4,4],[4,5]), LB([4.35,1.55],"+"), LB([4.35,4.5],"−")],
+  zener_reg: o => [X("dc",[0,2],[0,0],"V_in"), W([0,0],[1,0]), X("resistor",[1,0],[3,0],"R_s"), W([3,0],[8,0]),
+    X("zener",[4,2],[4,0],"D_Z",{hl:true}), X("resistor",[6,0],[6,2],"R_L"), W([0,2],[8,2]),
+    TM([8,0],"+"), TM([8,2],"−"), LB([8.5,1],"V_o")],
+  clipper_shunt: o => {
+    const d = o.bias
+      ? (o.negative ? [X("diode",[4,1],[4,0],"D",{hl:true}), X("dc",[4,1],[4,2],"V_R")] : [X("diode",[4,0],[4,1],"D",{hl:true}), X("dc",[4,2],[4,1],"V_R")])
+      : [o.negative ? X("diode",[4,2],[4,0],"D",{hl:true}) : X("diode",[4,0],[4,2],"D",{hl:true})];
+    return [X("ac",[0,2],[0,0],"V_in"), W([0,0],[1,0]), X("resistor",[1,0],[3,0],"R"), W([3,0],[6,0]), ...d, W([0,2],[6,2]),
+      TM([6,0],"+"), TM([6,2],"−"), LB([6.5,1],"V_o")]; },
+  clipper_series: o => [X("ac",[0,2],[0,0],"V_in"), W([0,0],[1,0]), o.negative ? X("diode",[3,0],[1,0],"D",{hl:true}) : X("diode",[1,0],[3,0],"D",{hl:true}),
+    W([3,0],[6,0]), X("resistor",[4,0],[4,2],"R_L"), W([0,2],[6,2]), TM([6,0],"+"), TM([6,2],"−"), LB([6.5,1],"V_o")],
+  clamper: o => [X("ac",[0,2],[0,0],"V_in"), W([0,0],[1,0]), X("capacitor",[1,0],[3,0],"C"), W([3,0],[7,0]),
+    o.negative ? X("diode",[4,0],[4,2],"D",{hl:true}) : X("diode",[4,2],[4,0],"D",{hl:true}), X("resistor",[6,0],[6,2],"R_L"), W([0,2],[7,2]),
+    TM([7,0],"+"), TM([7,2],"−"), LB([7.5,1],"V_o")],
+  envelope_detector: o => [X("ac",[0,2],[0,0],"V_AM"), W([0,0],[1,0]), X("diode",[1,0],[3,0],"D",{hl:true}), W([3,0],[7,0]),
+    X("capacitor",[4,0],[4,2],"C"), X("resistor",[6,0],[6,2],"R"), W([0,2],[7,2]), TM([7,0],"+"), TM([7,2],"−"), LB([7.5,1],"V_o")],
+  fixed_bias: o => [A("vcc",[4,0],{text:"+V_CC"}), W([2,0],[4,0]), X("resistor",[2,0],[2,2],"R_B"), W([2,2],[2,3],[3,3]),
+    X("resistor",[4,0],[4,2],"R_C"), A("npn",[3,3],{label:"Q",hl:true}), W([4,4],[4,5]), A("gnd",[4,5])],
+  collector_feedback_bias: o => [A("vcc",[4,0],{text:"+V_CC"}), X("resistor",[4,0],[4,2],"R_C"), W([4,2],[4,3]),
+    X("resistor",[2,2],[4,2],"R_B"), W([2,2],[2,4],[3,4]), A("npn",[3,4],{label:"Q",hl:true}), W([4,5],[4,6]), A("gnd",[4,6])],
+  vdb_bias: o => [W([2,0],[4,0]), A("vcc",[3,0],{text:"+V_CC"}), X("resistor",[2,0],[2,2],"R_1"), W([2,2],[2,3]), X("resistor",[2,3],[2,5],"R_2"),
+    W([2,3],[3,3]), X("resistor",[4,0],[4,2],"R_C"), A("npn",[3,3],{label:"Q",hl:true}), X("resistor",[4,4],[4,6],"R_E"),
+    W([2,5],[2,6],[4,6]), A("gnd",[3,6])],
+  ce_amp: o => [W([3,0],[5,0]), A("vcc",[4,0],{text:"+V_CC"}), X("resistor",[3,0],[3,2],"R_1"), W([3,2],[3,3]), X("resistor",[3,3],[3,5],"R_2"),
+    W([3,3],[4,3]), X("resistor",[5,0],[5,2],"R_C"), A("npn",[4,3],{label:"Q",hl:true}), X("resistor",[5,4],[5,6],"R_E"),
+    TM([0,3],"V_in","left"), W([0,3],[1,3]), X("ecap",[1,3],[2,3],"C_in"), W([2,3],[3,3]),
+    W([5,2],[6,2]), X("ecap",[6,2],[7,2],"C_out"), W([7,2],[8,2]), TM([8,2],"V_o"),
+    W([5,4],[7,4]), X("ecap",[7,4],[7,6],"C_E"), W([3,5],[3,6],[7,6]), A("gnd",[5,6])],
+  cc_amp: o => [W([3,0],[5,0]), A("vcc",[4,0],{text:"+V_CC"}), X("resistor",[3,0],[3,2],"R_1"), W([3,2],[3,3]), X("resistor",[3,3],[3,5],"R_2"),
+    W([3,3],[4,3]), A("npn",[4,3],{label:"Q",hl:true}), W([5,2],[5,0]), X("resistor",[5,4],[5,6],"R_E"),
+    TM([0,3],"V_in","left"), W([0,3],[1,3]), X("ecap",[1,3],[2,3],"C_in"), W([2,3],[3,3]),
+    W([5,4],[6,4]), X("ecap",[6,4],[7,4],"C_out"), W([7,4],[8,4]), TM([8,4],"V_o"), W([3,5],[3,6],[5,6]), A("gnd",[4,6])],
+  cs_amp: o => [W([3,0],[5,0]), A("vcc",[4,0],{text:"+V_DD"}), X("resistor",[3,0],[3,2],"R_1"), W([3,2],[3,3]), X("resistor",[3,3],[3,5],"R_2"),
+    W([3,3],[4,3]), X("resistor",[5,0],[5,2],"R_D"), A("nmos",[4,3],{label:"M",hl:true}), X("resistor",[5,4],[5,6],"R_S"),
+    TM([0,3],"V_in","left"), W([0,3],[1,3]), X("ecap",[1,3],[2,3],"C_in"), W([2,3],[3,3]),
+    W([5,2],[6,2]), X("ecap",[6,2],[7,2],"C_out"), W([7,2],[8,2]), TM([8,2],"V_o"),
+    W([5,4],[7,4]), X("ecap",[7,4],[7,6],"C_S"), W([3,5],[3,6],[7,6]), A("gnd",[5,6])],
+  diff_amp: o => [W([3,0],[5,0]), A("vcc",[4,0],{text:"+V_CC"}), X("resistor",[3,0],[3,2],"R_C"), X("resistor",[5,0],[5,2],"R_C"),
+    A("npn",[2,3],{label:"Q_1",hl:true}), A("npn",[6,3],{label:"Q_2",mirror:true,hl:true}),
+    W([3,4],[3,5],[5,5],[5,4]), X("resistor",[4,5],[4,7],"R_E"), A("vee",[4,7],{text:"−V_EE"}),
+    W([1,3],[2,3]), TM([1,3],"V_1","left"), W([6,3],[7,3]), TM([7,3],"V_2"),
+    W([3,2],[2,2]), TM([2,2],"V_o1","left"), W([5,2],[6,2]), TM([6,2],"V_o2")],
+  cmos_inverter: o => [A("pmos",[2,1],{label:"Q_P",hl:true}), A("nmos",[2,3],{label:"Q_N",hl:true}), W([2,1],[1,1],[1,3],[2,3]),
+    W([0,2],[1,2]), TM([0,2],"V_in","left"), W([3,2],[4,2]), TM([4,2],"V_out"), A("vcc",[3,0],{text:"V_DD"}), A("gnd",[3,4])],
+  inverting: o => opInv(o, X("resistor",[0,1.5],[2,1.5],"R_1"), X("resistor",[3,0],[5,0],"R_f")),
+  integrator: o => opInv(o, X("resistor",[0,1.5],[2,1.5],"R"), X("capacitor",[3,0],[5,0],"C",{hl:true})),
+  differentiator: o => opInv(o, X("capacitor",[0,1.5],[2,1.5],"C",{hl:true}), X("resistor",[3,0],[5,0],"R")),
+  non_inverting: o => [A("opamp",[4,2]), W([4,2.5],[3,2.5],[3,4]), TM([3,4],"V_in","below"), W([4,1.5],[1,1.5]), W([2,1.5],[2,0],[4,0]),
+    X("resistor",[4,0],[6,0],"R_f"), W([6,0],[6,2],[7,2]), TM([7,2],"V_o"), X("resistor",[1,1.5],[1,3.5],"R_1",{flip:true}), A("gnd",[1,3.5])],
+  voltage_follower: o => [A("opamp",[3,2]), TM([1,2.5],"V_in","left"), W([1,2.5],[3,2.5]),
+    W([3,1.5],[2.5,1.5],[2.5,0.5],[5.5,0.5],[5.5,2]), W([5,2],[6.5,2]), TM([6.5,2],"V_o")],
+  summing: o => [A("opamp",[4,3]), TM([0,1],"V_1","left"), X("resistor",[0,1],[2,1],"R_1"), W([2,1],[3,1]),
+    TM([0,2.5],"V_2","left"), X("resistor",[0,2.5],[2,2.5],"R_2"), W([2,2.5],[3,2.5]),
+    TM([0,4],"V_3","left"), X("resistor",[0,4],[2,4],"R_3"), W([2,4],[3,4]),
+    W([3,4],[3,0],[4,0]), W([3,2.5],[4,2.5]), X("resistor",[4,0],[6,0],"R_f"), W([6,0],[6,3],[7,3]), TM([7,3],"V_o"),
+    W([4,3.5],[3.5,3.5],[3.5,4.5]), A("gnd",[3.5,4.5])],
+  difference: o => [A("opamp",[4,2]), TM([0,1.5],"V_1","left"), X("resistor",[0,1.5],[2,1.5],"R_1"), W([2,1.5],[4,1.5]),
+    W([3,1.5],[3,0],[4,0]), X("resistor",[4,0],[6,0],"R_f"), W([6,0],[6,2],[7,2]), TM([7,2],"V_o"),
+    TM([0,2.5],"V_2","left"), X("resistor",[0,2.5],[2,2.5],"R_2",{flip:true}), W([2,2.5],[4,2.5]), X("resistor",[3,2.5],[3,4],"R_3"), A("gnd",[3,4])],
+  comparator: o => [A("opamp",[3,2],{hl:true}), TM([1,2.5],"V_in","left"), W([1,2.5],[3,2.5]), TM([1,1.5],"V_ref","left"), W([1,1.5],[3,1.5]),
+    W([5,2],[6,2]), TM([6,2],"V_o")],
+  schmitt: o => [A("opamp",[4,2]), TM([1,1.5],"V_in","left"), W([1,1.5],[4,1.5]), W([4,2.5],[2,2.5]),
+    X("resistor",[2,2.5],[2,4],"R_1",{flip:true}), A("gnd",[2,4]), W([3,2.5],[3,3.5]), X("resistor",[3,3.5],[5,3.5],"R_2",{flip:true,hl:true}),
+    W([5,3.5],[6,3.5],[6,2]), W([6,2],[7,2]), TM([7,2],"V_o")],
+  rc_phase_shift: o => [A("opamp",[5,1]), W([4,0.5],[4,-1],[5,-1]), X("resistor",[5,-1],[7,-1],"R_f"), W([7,-1],[7,1]),
+    W([2,3],[2,0.5]), X("resistor",[2,0.5],[4,0.5],"R_1"), W([4,0.5],[5,0.5]), W([5,1.5],[4.5,1.5]), A("gnd",[4.5,1.5]),
+    W([7,1],[8,1],[8,3]), W([8,1],[9,1]), TM([9,1],"V_o"),
+    X("capacitor",[8,3],[6,3],"C",{hl:true}), X("capacitor",[6,3],[4,3],"C",{hl:true}), X("capacitor",[4,3],[2,3],"C",{hl:true}),
+    X("resistor",[6,3],[6,4.5],"R"), X("resistor",[4,3],[4,4.5],"R"), X("resistor",[2,3],[2,4.5],"R",{flip:true}),
+    W([2,4.5],[6,4.5]), A("gnd",[3,4.5])],
+  wien_bridge: o => [A("opamp",[4,2]), W([4,1.5],[3,1.5]), W([3,1.5],[3,0],[4,0]), X("resistor",[4,0],[6,0],"R_f"), W([6,0],[6,2]),
+    X("resistor",[1,1.5],[3,1.5],"R_1"), W([1,1.5],[0,1.5],[0,2]), A("gnd",[0,2]),
+    W([4,2.5],[3,2.5],[3,4]), W([2,4],[3,4]), X("resistor",[2,4],[2,6],"R",{flip:true,hl:true}), X("capacitor",[3,4],[3,6],"C",{hl:true}),
+    W([2,6],[3,6]), A("gnd",[2.5,6]), W([6,2],[6,4]), X("resistor",[6,4],[4.5,4],"R",{flip:true,hl:true}), X("capacitor",[4.5,4],[3,4],"C",{flip:true,hl:true}), W([6,2],[7,2]), TM([7,2],"V_o")],
+  rc_lowpass: o => [X("ac",[0,2],[0,0],"V_in"), W([0,0],[1,0]), X("resistor",[1,0],[3,0],"R"), W([3,0],[5,0]), X("capacitor",[4,0],[4,2],"C",{hl:true}),
+    W([0,2],[5,2]), TM([5,0],"+"), TM([5,2],"−"), LB([5.5,1],"V_o")],
+  rc_highpass: o => [X("ac",[0,2],[0,0],"V_in"), W([0,0],[1,0]), X("capacitor",[1,0],[3,0],"C",{hl:true}), W([3,0],[5,0]), X("resistor",[4,0],[4,2],"R"),
+    W([0,2],[5,2]), TM([5,0],"+"), TM([5,2],"−"), LB([5.5,1],"V_o")],
+  rlc_series: o => [X("ac",[0,2],[0,0],"V"), W([0,0],[1,0]), X("resistor",[1,0],[3,0],"R"), X("inductor",[3,0],[5,0],"L"), W([5,0],[6,0]),
+    X("capacitor",[6,0],[6,2],"C"), W([6,2],[0,2]), {t:"arrow",from:[4,2.45],to:[2,2.45],label:"I",flip:true}],
+  rlc_parallel: o => [X("ac",[0,2],[0,0],"V"), W([0,0],[6,0]), X("resistor",[2,0],[2,2],"R"), X("inductor",[4,0],[4,2],"L"), X("capacitor",[6,0],[6,2],"C"), W([0,2],[6,2])],
+  active_lpf: o => [A("opamp",[4,2]), TM([0,2.5],"V_in","left"), X("resistor",[0,2.5],[2,2.5],"R",{flip:true}), W([2,2.5],[4,2.5]),
+    X("capacitor",[3,2.5],[3,4],"C",{hl:true}), A("gnd",[3,4]), W([4,1.5],[3,1.5]), W([3,1.5],[3,0],[4,0]), X("resistor",[4,0],[6,0],"R_f"),
+    W([6,0],[6,2],[7,2]), TM([7,2],"V_o"), X("resistor",[1,1.5],[3,1.5],"R_1"), A("gnd",[1,1.5])],
+  astable_555: o => [IC555([4,1]), W([2,0],[6,0]), A("vcc",[4,0],{text:"+V_CC"}), W([5,0],[5,1]), W([6,0],[6,1]),
+    X("resistor",[2,0],[2,2],"R_A"), W([2,2],[4,2]), X("resistor",[2,2],[2,4],"R_B",{flip:true}), W([2,4],[4,4]), W([4,3],[3,3],[3,4]),
+    X("capacitor",[2,4],[2,6],"C",{hl:true}), W([2,6],[8,6]), W([5,5],[5,6]), A("gnd",[5,6]),
+    W([7,3],[8,3]), X("capacitor",[8,3],[8,5],"0.01μF"), W([8,5],[8,6]), W([7,2],[9,2]), TM([9,2],"V_o")],
+  monostable_555: o => [IC555([4,1]), W([2,0],[6,0]), A("vcc",[4,0],{text:"+V_CC"}), W([5,0],[5,1]), W([6,0],[6,1]),
+    X("resistor",[2,0],[2,2],"R"), W([2,2],[4,2]), W([4,3],[3,3],[3,2]), X("capacitor",[2,2],[2,4],"C",{flip:true,hl:true}),
+    W([2,4],[2,6],[8,6]), W([5,5],[5,6]), A("gnd",[5,6]), W([4,4],[3,4]), TM([3,4],"Trigger","below"),
+    W([7,3],[8,3]), X("capacitor",[8,3],[8,5],"0.01μF"), W([8,5],[8,6]), W([7,2],[9,2]), TM([9,2],"V_o")],
+  half_adder: o => [A("xor",[2,0],{hl:true}), A("and",[2,2],{hl:true}), TM([0,-0.5],"A","left"), W([0,-0.5],[2,-0.5]), W([1,-0.5],[1,1.5],[2,1.5]),
+    TM([0,0.5],"B","left"), W([0,0.5],[2,0.5]), W([0.5,0.5],[0.5,2.5],[2,2.5]), W([4,0],[5,0]), TM([5,0],"S"), W([4,2],[5,2]), TM([5,2],"C")],
+  full_adder: o => [A("xor",[2,0]), A("xor",[6,0.5],{hl:true}), A("and",[2,5]), A("and",[6,3]), A("or",[9,4],{hl:true}),
+    TM([0,-1.5],"C_in","left"), TM([0,-0.5],"A","left"), TM([0,0.5],"B","left"),
+    W([0,-0.5],[2,-0.5]), W([1,-0.5],[1,4.5],[2,4.5]), W([0,0.5],[2,0.5]), W([0.5,0.5],[0.5,5.5],[2,5.5]),
+    W([4,0],[6,0]), W([5,0],[5,2.5],[6,2.5]), W([0,-1.5],[5.5,-1.5],[5.5,1],[6,1]), W([5.5,1],[5.5,3.5],[6,3.5]),
+    W([8,0.5],[12,0.5]), TM([12,0.5],"S"), W([8,3],[8.5,3],[8.5,3.5],[9,3.5]), W([4,5],[8.5,5],[8.5,4.5],[9,4.5]), W([11,4],[12,4]), TM([12,4],"C_out")],
+  sr_latch_nor: o => latch("nor", "R", "S"),
+  sr_latch_nand: o => latch("nand", "S̄", "R̄")
+};
+function opInv(o, rin, rf){
+  return [A("opamp",[3,2]), TM([0,1.5],"V_in","left"), rin, W([2,1.5],[3,1.5]), W([2,1.5],[2,0],[3,0]), rf, W([5,0],[5,2]),
+    W([5,2],[6,2]), TM([6,2],"V_o"), W([3,2.5],[2.5,2.5],[2.5,3.25]), A("gnd",[2.5,3.25])];
+}
+function latch(g, top, bottom){
+  return [A(g,[2,0],{hl:true}), A(g,[2,3],{hl:true}), TM([0,-0.5],top,"left"), W([0,-0.5],[2,-0.5]), TM([0,3.5],bottom,"left"), W([0,3.5],[2,3.5]),
+    W([4,0],[5,0]), TM([5,0],"Q"), W([4.5,0],[4.5,1.25],[1.5,1.25],[1.5,2.5],[2,2.5]),
+    W([4,3],[5,3]), TM([5,3],"Q̄"), W([4.5,3],[4.5,1.75],[1,1.75],[1,0.5],[2,0.5])];
+}
+
+/* ---------- expand, snap, check ---------- */
+function prepare(spec){
+  let els, fromTemplate = false;
+  if(spec && spec.template){
+    const k = String(spec.template).toLowerCase().replace(/[\s-]/g,"_");
+    if(!TEMPLATES[k]) throw new Error("unknown template");
+    els = TEMPLATES[k](spec); fromTemplate = true;
+    if(spec.labels && typeof spec.labels === "object") els.forEach(e => { if(e.label && spec.labels[e.label] != null) e.label = String(spec.labels[e.label]); if(e.text && spec.labels[e.text] != null) e.text = String(spec.labels[e.text]); });
+  } else els = Array.isArray(spec) ? spec : ((spec && (spec.elements || spec.parts)) || []);
+  els = els.filter(e => e && typeof e === "object").map(e => ({ ...e, _t: normType(e) }));
+  // normalise wires to {path}
+  els.forEach(e => { if(e._t === "wire"){ const p = e.path || e.points || [e.from, e.to]; try{ e.path = p.map(gp); }catch(err){ e._bad = true; } } });
+  els = els.filter(e => !e._bad);
+  // snap near-miss wire ends onto pins
+  const pins = [];
+  els.forEach(e => { if(e._t !== "wire"){ try{ pinsOf(e).forEach(p => pins.push(p)); }catch(err){} } });
+  els.forEach(e => { if(e._t !== "wire") return; [0, e.path.length-1].forEach(i => {
+    const p = e.path[i]; let best = null, bd = 0.36;
+    pins.forEach(q => { const d = Math.hypot(p[0]-q[0], p[1]-q[1]); if(d > EPS && d < bd){ bd = d; best = q; } });
+    if(best){ const nb = e.path.length > 2 ? e.path[i === 0 ? 1 : e.path.length-2] : null; if(nb && (Math.abs(nb[0]-p[0]) < EPS)) nb[0] = best[0]; else if(nb && Math.abs(nb[1]-p[1]) < EPS) nb[1] = best[1]; e.path[i] = [best[0], best[1]]; }
+  }); });
+  return { els, fromTemplate };
+}
+
+function connections(els){
+  const pins = [], ends = [], verts = [], segs = [];
+  els.forEach((e, idx) => {
+    if(e._t === "wire"){
+      e.path.forEach((p, i) => { (i === 0 || i === e.path.length-1 ? ends : verts).push({ p, idx }); if(i) segs.push({ a:e.path[i-1], b:p, idx }); });
+    } else { try{ pinsOf(e).forEach(p => pins.push({ p, idx, rail: RAILS.includes(e._t) || e._t === "terminal" })); }catch(err){} }
+  });
+  return { pins, ends, verts, segs };
+}
+
+function check(els){
+  const issues = [];
+  const { pins, ends, verts, segs } = connections(els);
+  const touches = (p, idx) => pins.some(q => q.idx !== idx && same(q.p, p)) || ends.some(q => q.idx !== idx && same(q.p, p)) ||
+    verts.some(q => q.idx !== idx && same(q.p, p)) || segs.some(s => s.idx !== idx && onInterior(p, s.a, s.b));
+  const fmt = p => `[${+p[0].toFixed(2)},${+p[1].toFixed(2)}]`;
+  els.forEach((e, idx) => {
+    const t = e._t;
+    if(t === "wire"){
+      e.path.forEach((p, i) => { if(i && Math.abs(p[0]-e.path[i-1][0]) > EPS && Math.abs(p[1]-e.path[i-1][1]) > EPS) issues.push(`wire segment ${fmt(e.path[i-1])}→${fmt(p)} is diagonal; use horizontal and vertical segments`); });
+      [e.path[0], e.path[e.path.length-1]].forEach(p => { if(!touches(p, idx)) issues.push(`wire end ${fmt(p)} is not connected to any part pin or wire`); });
+    } else if(t !== "ic"){
+      let ps = []; try{ ps = pinsOf(e); }catch(err){ issues.push(`${t} has invalid coordinates`); }
+      ps.forEach(p => { if(!touches(p, idx)) issues.push(`${nameOf(e)} pin ${fmt(p)} is not connected`); });
+    }
+    if(BODY[t]){
+      const a = gp(e.from), b = gp(e.to);
+      segs.forEach(s => { if(s.idx === idx) return;
+        const hit = segCross(a, b, s.a, s.b);
+        if(hit && onInterior(hit.p, a, b)) issues.push(`a wire touches the middle of ${nameOf(e)} at ${fmt(hit.p)}; wires may connect only to its ends ${fmt(a)} and ${fmt(b)}`);
+        else if(!hit && (onInterior(s.a, a, b) || onInterior(s.b, a, b))) issues.push(`a wire runs along the body of ${nameOf(e)}`);
+      });
+      pins.forEach(q => { if(q.idx !== idx && onInterior(q.p, a, b)) issues.push(`a pin of ${nameOf(els[q.idx])} sits in the middle of ${nameOf(e)} at ${fmt(q.p)}`); });
+    }
+    const box = boxOf(e);
+    if(box) segs.forEach(s => { for(let k = 1; k < 20; k++){ const x = s.a[0]+(s.b[0]-s.a[0])*k/20, y = s.a[1]+(s.b[1]-s.a[1])*k/20;
+      if(x > box[0]+EPS && x < box[2]-EPS && y > box[1]+EPS && y < box[3]-EPS){ issues.push(`a wire passes through the ${t} symbol at ${fmt([x,y])}`); break; } } });
+  });
+  return [...new Set(issues)];
+}
+
+function autoDots(els){
+  const { pins, ends, verts, segs } = connections(els);
+  const cand = [...pins.filter(q=>!q.rail), ...ends, ...verts].map(q => q.p);
+  const uniq = []; cand.forEach(p => { if(!uniq.some(q => same(p,q))) uniq.push(p); });
+  const dots = [];
+  uniq.forEach(p => {
+    let n = 0;
+    pins.forEach(q => { if(!q.rail && same(q.p,p)) n += 1; });
+    ends.forEach(q => { if(same(q.p,p)) n += 1; });
+    verts.forEach(q => { if(same(q.p,p)) n += 2; });
+    segs.forEach(s => { if(onInterior(p, s.a, s.b)) n += 2; });
+    if(n >= 3) dots.push(p);
+  });
+  return dots;
+}
+
+/* ---------- draw ---------- */
+function drawCircuit(spec){
+  const { els } = prepare(spec);
+  const dots = autoDots(els);
+  const parts = []; let minX=1e9, minY=1e9, maxX=-1e9, maxY=-1e9;
+  const ext = (x,y) => { minX=Math.min(minX,x); maxX=Math.max(maxX,x); minY=Math.min(minY,y); maxY=Math.max(maxY,y); };
+  const P = p => { const [x,y] = gp(p); return [x*G, y*G]; };
+  for(const e of els){
+    try{
+      const t = e._t; let g = "", lab = "";
+      if(t === "wire"){
+        const pts = e.path.map(p => [p[0]*G, p[1]*G]);
+        g = `<path d="M${pts.map(p=>f1(p[0])+" "+f1(p[1])).join(" L")}"/>`; pts.forEach(p=>ext(...p));
+      } else if(BODY[t] || t === "arrow"){
+        const [x1,y1] = P(e.from), [x2,y2] = P(e.to);
+        const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy); if(L < 1) throw new Error("len");
+        const ux=dx/L, uy=dy/L, mx=(x1+x2)/2, my=(y1+y2)/2;
+        ext(x1,y1); ext(x2,y2);
+        if(t === "arrow"){
+          const sx = x1+ux*6, sy = y1+uy*6, ex = x2-ux*6, ey = y2-uy*6;
+          g = `<path d="M${f1(sx)} ${f1(sy)} L${f1(ex-ux*6)} ${f1(ey-uy*6)}" stroke-width="1.6"/>` + head(ex,ey,ux,uy,9);
+          if(e.label){ const s = sidePt(mx,my,ux,uy,14,e.flip); lab = T(s.x,s.y,e.label,s.anchor); ext(s.x,s.y); }
+        } else {
+          const [hw, body] = BODY[t];
+          const ang = Math.atan2(dy,dx)*180/Math.PI;
+          g = `<path d="M${f1(x1)} ${f1(y1)} L${f1(mx-ux*hw)} ${f1(my-uy*hw)} M${f1(mx+ux*hw)} ${f1(my+uy*hw)} L${f1(x2)} ${f1(y2)}"/>`;
+          g += `<g transform="translate(${f1(mx)} ${f1(my)}) rotate(${f1(ang)})">${body}</g>`;
+          if(t === "ac") g += `<path transform="translate(${f1(mx)} ${f1(my)})" d="M-8 0 q4 -9 8 0 t8 0"/>`;
+          if(t === "vsrc") lab += T(mx, my-2, "+", "middle", 11) + T(mx, my+10, "−", "middle", 11);
+          if(t === "meter") lab += T(mx, my+5, (e.text || "V").slice(0,2), "middle", 14);
+          const isSrc = ["ac","dc","vsrc","isrc"].includes(t);
+          if(e.label){ const s = sidePt(mx,my,ux,uy, hw>=13 ? 24 : 18, isSrc ? !e.flip : e.flip); lab += T(s.x,s.y,e.label,s.anchor); ext(s.x,s.y); }
+        }
+      } else if(t === "dot"){
+        continue;
+      } else if(t === "terminal"){
+        const [x,y] = P(e.at); g = `<circle class="term" cx="${f1(x)}" cy="${f1(y)}" r="4"/>`; ext(x,y);
+        if(e.text){ const pos = e.pos || "right";
+          const o = pos==="left" ? [x-12,y+4,"end"] : pos==="above" ? [x,y-12,"middle"] : pos==="below" ? [x,y+22,"middle"] : [x+12,y+4,"start"];
+          lab = T(o[0],o[1],e.text,o[2]); ext(o[0] + (o[2]==="start" ? 30 : o[2]==="end" ? -30 : 0), o[1]); }
+      } else if(t === "label"){
+        const [x,y] = P(e.at); lab = T(x, y+4, e.text ?? e.label ?? "", e.anchor || "middle"); ext(x,y);
+      } else if(t === "gnd"){
+        const [x,y] = P(e.at); g = `<path d="M${x} ${y} V${y+10} M${x-11} ${y+10} H${x+11} M${x-7} ${y+15} H${x+7} M${x-3} ${y+20} H${x+3}"/>`; ext(x,y+22);
+      } else if(t === "vcc"){
+        const [x,y] = P(e.at); g = `<path d="M${x} ${y} V${y-12} M${x-9} ${y-12} H${x+9}"/>`; lab = T(x, y-18, e.text || "+V_CC", "middle"); ext(x,y-32);
+      } else if(t === "vee"){
+        const [x,y] = P(e.at); g = `<path d="M${x} ${y} V${y+12} M${x-9} ${y+12} H${x+9}"/>`; lab = T(x, y+28, e.text || "−V_EE", "middle"); ext(x,y+32);
+      } else if(t === "opamp"){
+        const [X,Y] = P(e.at); const fl = !!e.flip;
+        g = `<path d="M${X+12} ${Y-34} L${X+12} ${Y+34} L${X+68} ${Y} Z"/>`;
+        g += `<path d="M${X} ${Y-20} H${X+12} M${X} ${Y+20} H${X+12} M${X+68} ${Y} H${X+80}"/>`;
+        const mY = fl ? Y+20 : Y-20, pY = fl ? Y-20 : Y+20;
+        g += `<path d="M${X+17} ${mY} h8 M${X+17} ${pY} h8 M${X+21} ${pY-4} v8" stroke-width="1.6"/>`;
+        if(e.label) lab = T(X+44, Y-30, e.label, "start");
+        ext(X,Y-36); ext(X+80,Y+36);
+      } else if(t === "npn" || t === "pnp" || t === "nmos" || t === "pmos"){
+        const [X,Y] = P(e.at); let b = "";
+        if(t === "npn" || t === "pnp"){
+          b = `<path d="M${X} ${Y} H${X+18}"/><path d="M${X+18} ${Y-15} V${Y+15}" stroke-width="3"/>`;
+          b += `<path d="M${X+18} ${Y-7} L${X+40} ${Y-20} V${Y-40} M${X+18} ${Y+7} L${X+40} ${Y+20} V${Y+40}"/>`;
+          const L=Math.hypot(22,13);
+          b += t === "npn" ? head(X+38, Y+18.8, 22/L, 13/L, 9) : head(X+23, Y-10, -22/L, 13/L, 9);
+        } else {
+          const p = t === "pmos";
+          b = `<path d="M${X} ${Y} H${X+14} M${X+14} ${Y-14} V${Y+14}"/>`;
+          b += `<path d="M${X+20} ${Y-17} V${Y-7} M${X+20} ${Y-5} V${Y+5} M${X+20} ${Y+7} V${Y+17}" stroke-width="2.6"/>`;
+          b += `<path d="M${X+20} ${Y-12} H${X+40} V${Y-40} M${X+20} ${Y+12} H${X+40} V${Y+40} M${X+20} ${Y} H${X+40} V${p ? Y-12 : Y+12}"/>`;
+          b += p ? head(X+38, Y, 1, 0, 8) : head(X+22, Y, -1, 0, 8);
+        }
+        g = e.mirror ? `<g transform="translate(${2*X} 0) scale(-1 1)">${b}</g>` : b;
+        if(e.label) lab = e.mirror ? T(X-48, Y+4, e.label, "end") : T(X+48, Y+4, e.label, "start");
+        if(e.mirror){ ext(X-40,Y-40); ext(X,Y+40); ext(X-70,Y); } else { ext(X,Y-40); ext(X+40,Y+40); ext(X+70,Y); }
+      } else if(t === "transformer"){
+        const [X,Y] = P(e.at);
+        const arcs = sw => Array(6).fill(`a5 5 0 0 ${sw} 0 10`).join(" ");
+        g = `<path d="M${X} ${Y} V${Y+10} ${arcs(1)} V${Y+80}"/><path d="M${X+40} ${Y} V${Y+10} ${arcs(0)} V${Y+80}"/>`;
+        g += `<path d="M${X+17} ${Y+6} V${Y+74} M${X+23} ${Y+6} V${Y+74}" stroke-width="1.6"/>`;
+        if(e.label) lab = T(X+20, Y-8, e.label, "middle");
+        ext(X-6,Y-14); ext(X+46,Y+80);
+      } else if(GATES.includes(t)){
+        const [X,Y] = P(e.at); const ins = pinsOf(e).slice(0,-1).map(p => p[1]*G - Y);
+        const bubble = ["nand","nor","xnor","not"].includes(t);
+        const orish = ["or","nor","xor","xnor"].includes(t), xorish = t==="xor" || t==="xnor";
+        let tip;
+        if(t === "not" || t === "buf"){ g = `<path d="M${X+18} ${Y-16} L${X+18} ${Y+16} L${X+54} ${Y} Z"/><path d="M${X} ${Y} H${X+18}"/>`; tip = 54; }
+        else if(orish){
+          g = `<path d="M${X+10} ${Y-24} Q${X+22} ${Y} ${X+10} ${Y+24} Q${X+44} ${Y+24} ${X+62} ${Y} Q${X+44} ${Y-24} ${X+10} ${Y-24} Z"/>`;
+          if(xorish) g += `<path d="M${X+3} ${Y-24} Q${X+15} ${Y} ${X+3} ${Y+24}"/>`;
+          ins.forEach(o => { const tt = (o+24)/48, back = (xorish ? 3 : 10) + 24*tt*(1-tt); g += `<path d="M${X} ${Y+o} H${f1(X+back)}"/>`; });
+          tip = 62;
+        } else {
+          g = `<path d="M${X+12} ${Y-24} H${X+34} A24 24 0 0 1 ${X+34} ${Y+24} H${X+12} Z"/>`;
+          ins.forEach(o => g += `<path d="M${X} ${Y+o} H${X+12}"/>`); tip = 58;
+        }
+        if(bubble){ g += `<circle cx="${X+tip+4}" cy="${Y}" r="4"/><path d="M${X+tip+8} ${Y} H${X+80}"/>`; }
+        else g += `<path d="M${X+tip} ${Y} H${X+80}"/>`;
+        if(e.label) lab = T(X+34, Y-30, e.label, "middle");
+        ext(X,Y-28); ext(X+80,Y+28);
+      } else if(t === "ic"){
+        const L = icLayout(e); const X0 = L.x*G, Y0 = L.y*G, Wd = L.w*G, Ht = L.h*G;
+        g = `<rect x="${X0}" y="${Y0}" width="${Wd}" height="${Ht}" rx="3"/>`;
+        lab = T(X0+Wd/2, Y0+Ht/2+5, e.label || "IC", "middle", 15);
+        L.pins.forEach(p => { const px = p.at[0]*G, py = p.at[1]*G;
+          if(p.side === "left"){ lab += T(px+5, py+4, p.name, "start", 10) + (p.num ? T(px-4, py-4, p.num, "end", 10) : ""); }
+          if(p.side === "right"){ lab += T(px-5, py+4, p.name, "end", 10) + (p.num ? T(px+4, py-4, p.num, "start", 10) : ""); }
+          if(p.side === "top"){ lab += T(px, py+14, p.name, "middle", 10) + (p.num ? T(px+4, py-4, p.num, "start", 10) : ""); }
+          if(p.side === "bottom"){ lab += T(px, py-6, p.name, "middle", 10) + (p.num ? T(px+4, py+13, p.num, "start", 10) : ""); }
+        });
+        ext(X0-10, Y0-10); ext(X0+Wd+10, Y0+Ht+14);
+      } else continue;
+      parts.push((e.hl ? `<g class="hl">${g}</g>` : g) + lab);
+    }catch(err){ /* skip a malformed element */ }
+  }
+  if(!parts.length) throw new Error("empty circuit");
+  dots.forEach(p => parts.push(`<circle cx="${f1(p[0]*G)}" cy="${f1(p[1]*G)}" r="3.6" fill="currentColor" stroke="none"/>`));
+  const x0 = minX-46, y0 = minY-30, w = (maxX-minX)+92, h = (maxY-minY)+60;
+  return `<svg viewBox="${f1(x0)} ${f1(y0)} ${f1(w)} ${f1(h)}" xmlns="http://www.w3.org/2000/svg" role="img" style="max-width:${Math.min(640, Math.round(w*1.1))}px"><g stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${parts.join("")}</g></svg>`;
+}
+function checkCircuit(body){
+  const spec = parseLoose(body);
+  const { els, fromTemplate } = prepare(spec);
+  return { template: fromTemplate, issues: check(els) };
+}
+
+/* ---------- plot ---------- */
+function tickList(v){ if(!Array.isArray(v)) return []; return v.map(t => Array.isArray(t) ? [num(t[0]), t[1] ?? ""] : (t && typeof t==="object") ? [num(t.at ?? t.v ?? t.value), t.label ?? t.text ?? ""] : [num(t), String(t)]); }
+function drawPlot(spec){
+  const xs = spec.x || {}; const a = num(xs.from ?? 0), b = num(xs.to ?? 2*Math.PI);
+  if(!(b > a)) throw new Error("x range");
+  const panels = Array.isArray(spec.panels) && spec.panels.length ? spec.panels : [spec];
+  const xticks = tickList(xs.ticks);
+  let maxLab = 0; panels.forEach(pn => { try{ tickList((pn.y||{}).ticks).forEach(([v,l]) => { maxLab = Math.max(maxLab, String(l).replace(/[_{}]/g,"").length); }); }catch(e){} });
+  const W = 620, L = Math.max(62, Math.min(170, 18 + maxLab*6.6)), R = 44, PH = 120, GT = 26, GB = 30, N = 600;
+  const H = panels.length * (PH+GT+GB);
+  const sx = x => L + (x-a)/(b-a)*(W-L-R);
+  let out = "";
+  panels.slice(0,4).forEach((pn, i) => {
+    const top = i*(PH+GT+GB) + GT, ys = pn.y || {};
+    const series = (pn.curves || []).slice(0,5).map(c => {
+      let pts = [];
+      if(Array.isArray(c.pts || c.points)) pts = (c.pts || c.points).map(p=>[Number(p[0]),Number(p[1])]).filter(p=>isFinite(p[0])&&isFinite(p[1]));
+      else if(c.f || c.expr || c.y){ const f = compile(c.f || c.expr || c.y); for(let k=0;k<=N;k++){ const x=a+(b-a)*k/N; let y; try{ y=f(x); }catch(err){ y=NaN; } pts.push([x, isFinite(y) && Math.abs(y)<1e6 ? y : NaN]); } }
+      return { c, pts };
+    });
+    let ymin = ys.from != null ? num(ys.from) : Infinity, ymax = ys.to != null ? num(ys.to) : -Infinity;
+    if(ys.from == null || ys.to == null){
+      let lo=Infinity, hi=-Infinity; series.forEach(s=>s.pts.forEach(p=>{ if(isFinite(p[1])){ lo=Math.min(lo,p[1]); hi=Math.max(hi,p[1]); } }));
+      if(!isFinite(lo)){ lo=-1; hi=1; } if(hi-lo < 1e-9){ lo-=1; hi+=1; }
+      const pad=(hi-lo)*0.15; if(ys.from==null) ymin = Math.min(lo-pad, lo>=0 ? -pad*0.5 : lo-pad); if(ys.to==null) ymax = hi+pad;
+    }
+    const sy = y => top + (ymax-y)/(ymax-ymin)*PH;
+    const y0 = (ymin<=0 && ymax>=0) ? sy(0) : top+PH;
+    const xa = (a<0 && b>0) ? sx(0) : L;
+    let g = "";
+    xticks.forEach(([v]) => { if(v>=a && v<=b){ const X=sx(v); g += `<path class="grid" d="M${f1(X)} ${top} V${top+PH}" stroke-dasharray="3 4" stroke-width="1"/>`; } });
+    tickList(ys.ticks).forEach(([v,lab]) => { if(v>=ymin && v<=ymax){ const Y=sy(v); g += `<path class="grid" d="M${L} ${f1(Y)} H${W-R}" stroke-dasharray="3 4" stroke-width="1"/><path d="M${f1(xa-4)} ${f1(Y)} H${f1(xa)}" stroke-width="1.4"/>` + T(xa-8, Y+4, lab, "end", 12); } });
+    g += `<path d="M${L} ${f1(y0)} H${W-R+10}" stroke-width="1.4"/>` + head(W-R+16, y0, 1, 0, 7);
+    g += `<path d="M${f1(xa)} ${top+PH} V${top-4}" stroke-width="1.4"/>` + head(xa, top-10, 0, -1, 7);
+    xticks.forEach(([v,lab]) => { if(v>=a && v<=b){ const X=sx(v); g += `<path d="M${f1(X)} ${f1(y0-4)} V${f1(y0+4)}" stroke-width="1.4"/>` + T(X, y0+17, lab, "middle", 12); } });
+    g += T(xa+8, top-8, ys.label || "", "start", 13);
+    if(i === panels.length-1 || pn.xlabel) g += T(W-R+18, y0+18, pn.xlabel || xs.label || "x", "middle", 13);
+    else g += T(W-R+18, y0+18, xs.label || "", "middle", 12);
+    series.forEach(({c, pts}) => {
+      let d = "", pen = false;
+      pts.forEach(([x,y]) => { if(!isFinite(y) || y<ymin-(ymax-ymin) || y>ymax+(ymax-ymin)){ pen=false; return; } const X=sx(x), Y=Math.max(top-6, Math.min(top+PH+6, sy(y))); d += (pen?"L":"M")+f1(X)+" "+f1(Y)+" "; pen = true; });
+      g += `<path d="${d.trim()}"${c.hl ? ' class="hl"' : ""}${c.dash ? ' stroke-dasharray="6 5"' : ""} stroke-width="${c.hl ? 2.6 : 2}"/>`;
+      if(c.name){ const last = pts.filter(p=>isFinite(p[1])).pop(); if(last) g += T(Math.min(sx(last[0])+6, W-R-4), sy(last[1])-6, c.name, "end", 12); }
+    });
+    out += g;
+  });
+  return `<svg viewBox="0 0 ${W+10} ${H}" xmlns="http://www.w3.org/2000/svg" role="img"><g stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${out}</g></svg>`;
+}
+
+/* ---------- block diagram ---------- */
+function wrap(text, n){
+  const words = String(text).split(/\s+/).filter(Boolean); const lines=[]; let cur="";
+  words.forEach(w=>{ if((cur+" "+w).trim().length > n && cur){ lines.push(cur); cur=w; } else cur=(cur+" "+w).trim(); });
+  if(cur) lines.push(cur); return lines.slice(0,4);
+}
+function drawBlocks(spec){
+  const nodes = {}; const CW = 232, CH = 118, BW = 144, BH = 56;
+  let maxX = 0, maxY = 0, out = "";
+  (spec.nodes || []).forEach(n => {
+    const x = Number(n.x)||0, y = Number(n.y)||0, shape = n.shape || "box";
+    const cx = 30 + BW/2 + x*CW, cy = 24 + BH/2 + y*CH;
+    const lines = shape === "circle" ? [String(n.text ?? "")] : wrap(n.text ?? n.label ?? "", 18);
+    const hw = shape==="circle" ? 20 : shape==="none" ? Math.min(BW/2, Math.max(...lines.map(l=>l.length))*3.7+4) : BW/2;
+    const hh = shape==="circle" ? 20 : shape==="none" ? lines.length*8+2 : Math.max(BH/2, lines.length*8+10);
+    nodes[n.id] = { cx, cy, hw, hh };
+    maxX = Math.max(maxX, cx+hw); maxY = Math.max(maxY, cy+hh);
+    let g = shape==="circle" ? `<circle cx="${cx}" cy="${cy}" r="20"/>` : shape==="none" ? "" : `<rect x="${cx-hw}" y="${cy-hh}" width="${hw*2}" height="${hh*2}" rx="6"/>`;
+    const lh = 15, y1 = cy - (lines.length-1)*lh/2 + 4.5;
+    lines.forEach((l,k) => g += T(cx, y1+k*lh, l, "middle", shape==="circle" ? 18 : 13));
+    out += n.hl ? `<g class="hl">${g}</g>` : g;
+  });
+  const id = "ah" + (++MK);
+  (spec.edges || []).forEach(ed => {
+    const [fa, tb, lab] = Array.isArray(ed) ? ed : [ed.from, ed.to, ed.label];
+    const A = nodes[fa], B = nodes[tb]; if(!A || !B) return;
+    let d, lx, ly, la = "middle";
+    if(Math.abs(A.cy-B.cy) < 1){ const s = B.cx>A.cx?1:-1; const x1=A.cx+s*A.hw, x2=B.cx-s*(B.hw+2); d=`M${x1} ${A.cy} H${x2}`; lx=(x1+x2)/2; ly=A.cy-7; }
+    else if(Math.abs(A.cx-B.cx) < 1){ const s = B.cy>A.cy?1:-1; const y1=A.cy+s*A.hh, y2=B.cy-s*(B.hh+2); d=`M${A.cx} ${y1} V${y2}`; lx=A.cx+8; ly=(y1+y2)/2+4; la="start"; }
+    else { const s = B.cx>A.cx?1:-1, v = B.cy>A.cy?1:-1; const x1=A.cx+s*A.hw, y2=B.cy-v*(B.hh+2); d=`M${x1} ${A.cy} H${B.cx} V${y2}`; lx=(x1+B.cx)/2; ly=A.cy-7; }
+    out += `<path d="${d}" marker-end="url(#${id})"/>`;
+    if(lab) out += T(lx, ly, lab, la, 12);
+  });
+  const W = maxX + 30, H = maxY + 24;
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" style="max-width:${Math.min(660, Math.round(W))}px"><defs><marker id="${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor" stroke="none"/></marker></defs><g stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${out}</g></svg>`;
+}
+
+function parseLoose(body){
+  try{ return JSON.parse(body); }catch(e){}
+  const s = body.replace(/\/\/[^\n]*/g,"").replace(/\/\*[\s\S]*?\*\//g,"").replace(/,\s*([}\]])/g,"$1");
+  return JSON.parse(s);
+}
+function render(lang, body){
+  const spec = parseLoose(body);
+  if(lang === "circuit") return drawCircuit(spec);
+  if(lang === "plot") return drawPlot(spec);
+  if(lang === "blocks") return drawBlocks(spec);
+  throw new Error("lang");
+}
+return { render, compile, checkCircuit, TEMPLATES: Object.keys(TEMPLATES) };
+})();
+
+/* ---------- rendering ---------- */
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function cleanSvg(src){
+  const out = DOMPurify.sanitize(src.trim(), { USE_PROFILES:{ svg:true, svgFilters:false } });
+  const tmp=document.createElement("div"); tmp.innerHTML=out;
+  const svg=tmp.querySelector("svg");
+  if(!svg) return `<div class="pending">This diagram could not be drawn.</div>`;
+  if(!svg.getAttribute("viewBox")){ const w=parseFloat(svg.getAttribute("width")), h=parseFloat(svg.getAttribute("height")); if(w&&h) svg.setAttribute("viewBox",`0 0 ${w} ${h}`); }
+  svg.removeAttribute("width"); svg.removeAttribute("height"); svg.removeAttribute("style");
+  svg.setAttribute("role","img");
+  return `<div class="fig">${svg.outerHTML}</div>`;
+}
+
+function figure(f, streaming){
+  if(f.lang === "svg") return cleanSvg(f.body);
+  try{
+    let warn = "";
+    if(f.lang === "circuit" && !streaming){ try{ const c = DIAG.checkCircuit(f.body); if(c.issues.length) warn = `<div class="fig-warn">${repairing ? "Checking this circuit's wiring…" : "This circuit may have a wiring error. Check it against your textbook."}</div>`; }catch(e){} }
+    return `<div class="fig">${DIAG.render(f.lang, f.body)}</div>${warn}`;
+  }
+  catch(e){ return `<div class="pending">This diagram could not be drawn.</div>`; }
+}
+function renderMd(text, streaming){
+  const svgs=[], codes=[], dm=[], im=[];
+  const DL=["svg","circuit","plot","blocks"];
+  let t = text.replace(/\r/g,"");
+  // unfinished fence while streaming
+  const fences = t.match(/```/g);
+  if(fences && fences.length % 2 === 1){
+    const i = t.lastIndexOf("```"); const lang = (t.slice(i+3).match(/^[A-Za-z]*/)||[""])[0].toLowerCase();
+    if(DL.includes(lang)) t = t.slice(0,i) + "\n\n⟦P⟧\n";
+  }
+  t = t.replace(/```([\w-]*)[^\n]*\n([\s\S]*?)```/g, (m, lang, body) => {
+    const L = lang.toLowerCase();
+    if(DL.includes(L) || /^\s*<svg/i.test(body)){ svgs.push({lang: DL.includes(L) ? L : "svg", body}); return `\n\n⟦S${svgs.length-1}⟧\n\n`; }
+    codes.push(m); return `⟦C${codes.length-1}⟧`;
+  });
+  t = t.replace(/(^|\n)\s*(<svg[\s\S]*?<\/svg>)/g, (m, pre, body) => { svgs.push({lang:"svg", body}); return `${pre}\n⟦S${svgs.length-1}⟧\n`; });
+  t = t.replace(/\$\$([\s\S]+?)\$\$/g, (m,b)=>{ dm.push(b); return `⟦D${dm.length-1}⟧`; });
+  t = t.replace(/\\\[([\s\S]+?)\\\]/g, (m,b)=>{ dm.push(b); return `⟦D${dm.length-1}⟧`; });
+  t = t.replace(/\\\((.+?)\\\)/g, (m,b)=>{ im.push(b); return `⟦M${im.length-1}⟧`; });
+  t = t.replace(/\$([^\s$](?:[^$\n]*?[^\s$\\])?)\$/g, (m,b)=>{ im.push(b); return `⟦M${im.length-1}⟧`; });
+  t = t.replace(/⟦C(\d+)⟧/g, (m,i)=>codes[+i]);
+
+  let html = DOMPurify.sanitize(marked.parse(t, { gfm:true, breaks:false }));
+  html = html.replace(/<table>/g,'<div class="tbl"><table>').replace(/<\/table>/g,'</table></div>');
+  html = html.replace(/<p>\s*⟦S(\d+)⟧\s*<\/p>/g, (m,i)=>figure(svgs[+i], streaming)).replace(/⟦S(\d+)⟧/g, (m,i)=>figure(svgs[+i], streaming));
+  html = html.replace(/<p>\s*⟦P⟧\s*<\/p>|⟦P⟧/g, '<div class="pending">Drawing diagram…</div>');
+  html = html.replace(/<p>\s*⟦D(\d+)⟧\s*<\/p>/g, (m,i)=>`<div class="eq">\\[${esc(dm[+i])}\\]</div>`)
+             .replace(/⟦D(\d+)⟧/g, (m,i)=>`<span class="eq">\\[${esc(dm[+i])}\\]</span>`)
+             .replace(/⟦M(\d+)⟧/g, (m,i)=>`\\(${esc(im[+i])}\\)`);
+  return html;
+}
+
+
+/* ---------- library app ---------- */
+const REQUEST_URL = "";            // optional: a Google Form link where students request topics or report mistakes
+const $ = id => document.getElementById(id);
+let repairing = false;
+const S = { lib: null, sem: "3", flat: [], cache: {} };
+
+async function loadLib(){
+  const r = await fetch("data/library.json", { cache: "no-cache" });
+  if(!r.ok) throw new Error("library");
+  S.lib = await r.json();
+  S.flat = [];
+  S.lib.semesters.forEach(sem => sem.subjects.forEach(sub => sub.units.forEach(u => u.topics.forEach(t => S.flat.push({ sem, sub, u, t })))));
+}
+const find = id => S.flat.find(x => x.t.id === id);
+const subjectByCode = code => { for(const sem of S.lib.semesters) for(const sub of sem.subjects) if(sub.code === code) return { sem, sub }; return null; };
+const readyCount = sub => sub.units.reduce((a,u) => a + u.topics.filter(t => t.ready).length, 0);
+const topicCount = sub => sub.units.reduce((a,u) => a + u.topics.length, 0);
+const escH = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+async function getNote(id){
+  if(S.cache[id]) return S.cache[id];
+  const code = id.split("-")[0];
+  const r = await fetch(`notes/${code}/${id}.md`);
+  if(!r.ok) throw new Error("note");
+  return (S.cache[id] = await r.text());
+}
+
+/* ---------- views ---------- */
+function setView(name){ ["home","subject","topic"].forEach(v => $("v-"+v).hidden = v !== name); window.scrollTo(0,0); }
+
+function showHome(){
+  setView("home"); document.title = "E&TC हिंदी नोट्स";
+  const tabs = $("semtabs"); tabs.innerHTML = "";
+  S.lib.semesters.forEach(sem => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "semtab"; b.textContent = sem.name;
+    b.setAttribute("aria-pressed", sem.id === S.sem ? "true" : "false");
+    b.onclick = () => { S.sem = sem.id; try{ localStorage.setItem("sem", sem.id); }catch(e){} showHome(); };
+    tabs.append(b);
+  });
+  const sem = S.lib.semesters.find(s => s.id === S.sem) || S.lib.semesters[0];
+  const grid = $("subjects"); grid.innerHTML = "";
+  sem.subjects.forEach(sub => {
+    const r = readyCount(sub), n = topicCount(sub);
+    const a = document.createElement("a"); a.className = "subj" + (r ? "" : " soon"); a.href = "#s-" + sub.code;
+    a.innerHTML = `<span class="code">${sub.code} · Paper ${sub.paper}</span><span class="sname">${escH(sub.name)}</span>
+      ${sub.elective ? `<span class="elect">${escH(sub.elective)}</span>` : ""}
+      <span class="prog"><span class="bar"><span style="width:${Math.round(100*r/n)}%"></span></span><span class="pnum">${r ? `${r} of ${n} topics ready` : "Notes coming soon"}</span></span>`;
+    grid.append(a);
+  });
+  doSearch();
+}
+
+function showSubject(code){
+  const f = subjectByCode(code); if(!f) return showHome();
+  S.sem = f.sem.id; setView("subject"); document.title = `${f.sub.name} · E&TC हिंदी नोट्स`;
+  $("s-crumb").innerHTML = `<a href="#home">${escH(f.sem.name)}</a> <span>›</span> ${escH(f.sub.code)}`;
+  $("s-title").textContent = f.sub.name;
+  $("s-meta").textContent = `Subject code ${f.sub.code} · Paper code ${f.sub.paper}${f.sub.elective ? " · " + f.sub.elective : ""} · ${readyCount(f.sub)} of ${topicCount(f.sub)} topics ready`;
+  const box = $("units"); box.innerHTML = "";
+  f.sub.units.forEach(u => {
+    const ready = u.topics.filter(t => t.ready).length;
+    const sec = document.createElement("section"); sec.className = "unit";
+    sec.innerHTML = `<div class="uhead"><div><span class="un">Unit ${u.n}</span><h3></h3></div>
+      <div class="uright">${u.marks ? `<span class="marks">${u.marks} marks</span>` : ""}${ready ? `<button class="btn ubtn" type="button">Unit PDF</button>` : ""}</div></div><ol class="tlist"></ol>`;
+    sec.querySelector("h3").textContent = u.name;
+    const ol = sec.querySelector("ol");
+    u.topics.forEach(t => {
+      const li = document.createElement("li");
+      li.innerHTML = t.ready
+        ? `<a href="#t-${t.id}"><span class="tn">${t.id.split("-").slice(1).join(".")}</span><span class="tt"><span class="te"></span>${t.h ? `<span class="th"></span>` : ""}</span><span class="chip ok">Read</span></a>`
+        : `<div class="na"><span class="tn">${t.id.split("-").slice(1).join(".")}</span><span class="tt"><span class="te"></span>${t.h ? `<span class="th"></span>` : ""}</span><span class="chip">Coming soon</span></div>`;
+      li.querySelector(".te").textContent = t.t; if(t.h) li.querySelector(".th").textContent = t.h;
+      ol.append(li);
+    });
+    const ub = sec.querySelector(".ubtn"); if(ub) ub.onclick = () => unitPdf(f, u, ub);
+    box.append(sec);
+  });
+}
+
+async function showTopic(id){
+  const f = find(id); if(!f || !f.t.ready) return showHome();
+  S.sem = f.sem.id; S.current = f; setView("topic");
+  document.title = `${f.t.t} · E&TC हिंदी नोट्स`;
+  $("t-crumb").innerHTML = `<a href="#home">${escH(f.sem.name)}</a> <span>›</span> <a href="#s-${f.sub.code}">${escH(f.sub.name)}</a> <span>›</span> Unit ${f.u.n}`;
+  $("margin").innerHTML = `<span>${f.sub.code}</span><span>U${f.u.n}</span>`;
+  $("qhead").innerHTML = `<span class="meta"></span><h1></h1>${f.t.h ? `<div class="hsub"></div>` : ""}`;
+  $("qhead").querySelector(".meta").textContent = `${f.sem.name} · ${f.sub.code} ${f.sub.name} · Unit ${f.u.n}: ${f.u.name}`;
+  $("qhead").querySelector("h1").textContent = f.t.t; if(f.t.h) $("qhead").querySelector(".hsub").textContent = f.t.h;
+  $("md").innerHTML = `<div class="thinking"><b>Loading notes…</b></div>`; showMsg("");
+  const ready = S.flat.filter(x => x.t.ready && x.sub.code === f.sub.code), i = ready.indexOf(f);
+  const prev = ready[i-1], next = ready[i+1];
+  $("pager").innerHTML = `${prev ? `<a class="pg" href="#t-${prev.t.id}"><span>← Previous</span><b></b></a>` : "<span></span>"}${next ? `<a class="pg nx" href="#t-${next.t.id}"><span>Next →</span><b></b></a>` : "<span></span>"}`;
+  if(prev) $("pager").querySelector(".pg b").textContent = prev.t.t;
+  if(next) $("pager").querySelector(".nx b").textContent = next.t.t;
+  try{
+    const text = await getNote(id);
+    if(S.current !== f) return;
+    $("md").innerHTML = renderMd(text, false); typesetEl($("md"));
+  }catch(e){ $("md").innerHTML = ""; showMsg("These notes could not be loaded. Check your internet connection and reload the page.", true); }
+}
+
+function route(){
+  const h = decodeURIComponent(location.hash.slice(1));
+  if(h.startsWith("t-")) showTopic(h.slice(2));
+  else if(h.startsWith("s-")) showSubject(h.slice(2));
+  else showHome();
+}
+
+/* ---------- search ---------- */
+function doSearch(){
+  const q = ($("search").value || "").trim().toLowerCase(); const out = $("results");
+  if(q.length < 2){ out.hidden = true; $("subjects").hidden = false; $("semtabs").hidden = false; return; }
+  const words = q.split(/\s+/);
+  const hits = S.flat.filter(x => { const s = `${x.t.t} ${x.t.h||""} ${x.sub.name} ${x.sub.code} ${x.u.name}`.toLowerCase(); return words.every(w => s.includes(w)); })
+    .sort((a,b) => (b.t.ready?1:0) - (a.t.ready?1:0)).slice(0, 40);
+  out.hidden = false; $("subjects").hidden = true; $("semtabs").hidden = true;
+  out.innerHTML = hits.length ? "" : `<p class="empty">No topic matches “${escH(q)}”. Try another word, e.g. rectifier, zener, flip-flop.</p>`;
+  hits.forEach(x => {
+    const el = document.createElement(x.t.ready ? "a" : "div"); el.className = "hit" + (x.t.ready ? "" : " na");
+    if(x.t.ready) el.href = "#t-" + x.t.id;
+    el.innerHTML = `<span class="hs">${x.sem.name} · ${x.sub.code} ${escH(x.sub.name)} · Unit ${x.u.n}</span><span class="ht"></span><span class="chip${x.t.ready ? " ok" : ""}">${x.t.ready ? "Read" : "Coming soon"}</span>`;
+    el.querySelector(".ht").textContent = x.t.t + (x.t.h ? " · " + x.t.h : "");
+    out.append(el);
+  });
+}
+
+/* ---------- maths ---------- */
+async function mathReady(){
+  for(let i = 0; i < 100 && !(window.MathJax && MathJax.typesetPromise); i++) await new Promise(r => setTimeout(r, 100));
+  if(window.MathJax && MathJax.startup && MathJax.startup.promise) await MathJax.startup.promise;
+}
+async function typesetEl(el){ await mathReady(); if(window.MathJax && MathJax.typesetPromise){ try{ MathJax.typesetClear && MathJax.typesetClear([el]); await MathJax.typesetPromise([el]); }catch(e){} } }
+
+function showMsg(txt, err){
+  const box = document.querySelector(".view:not([hidden]) .msgbox"); if(!box) return;
+  box.innerHTML = txt ? `<div class="note${err?" err":""}"></div>` : ""; if(txt) box.firstChild.textContent = txt;
+}
+
+/* ---------- PDF ---------- */
+const PDF_LIBS = [
+  ["html2canvas", ["https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js", "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"]],
+  ["jspdf", ["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js", "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"]]
+];
+const PDF_W = 688, PAGE_MM = { w:210, h:297, side:14, top:14, bottom:16 };
+const PAGE_H = Math.floor((PAGE_MM.h - PAGE_MM.top - PAGE_MM.bottom) * PDF_W / (PAGE_MM.w - 2*PAGE_MM.side));
+function loadScript(src){ return new Promise((res, rej) => { const el = document.createElement("script"); el.src = src; el.onload = res; el.onerror = () => { el.remove(); rej(new Error(src)); }; document.head.appendChild(el); }); }
+let libsReady = null;
+function loadPdfLibs(){
+  if(!libsReady) libsReady = (async () => { for(const [g, urls] of PDF_LIBS){ if(window[g]) continue; let ok = false; for(const u of urls){ try{ await loadScript(u); ok = true; break; }catch(e){} } if(!ok) throw new Error("lib"); } })().catch(e => { libsReady = null; throw e; });
+  return libsReady;
+}
+function fixSvgsForPdf(body){
+  body.querySelectorAll(".fig-warn, .pending, .thinking").forEach(n => n.remove());
+  body.querySelectorAll("mjx-assistive-mml").forEach(n => n.remove());
+  body.querySelectorAll(".fig svg").forEach(svg => {
+    const vb = (svg.getAttribute("viewBox") || "").split(/\s+/).map(Number);
+    if(vb.length === 4 && vb[2] > 0){
+      const w = Math.round(Math.min(560, vb[2] * 1.1, (parseFloat(svg.style.maxWidth) || 9999))), h = Math.round(w * vb[3] / vb[2]);
+      svg.setAttribute("width", w); svg.setAttribute("height", h); svg.style.cssText = `width:${w}px;height:${h}px;max-width:100%;display:inline-block`;
+    } else svg.removeAttribute("style");
+    svg.setAttribute("color", "#172033"); svg.setAttribute("font-family", "Helvetica, Arial, sans-serif");
+    svg.querySelectorAll(".hl").forEach(n => n.setAttribute("stroke", "#c0392b"));
+    svg.querySelectorAll('.hl [fill="currentColor"], [fill="currentColor"].hl').forEach(n => n.setAttribute("fill", "#c0392b"));
+    svg.querySelectorAll(".hl text").forEach(n => n.setAttribute("fill", "#172033"));
+    svg.querySelectorAll(".term").forEach(n => n.setAttribute("fill", "#ffffff"));
+    svg.querySelectorAll(".grid").forEach(n => { n.setAttribute("stroke", "#5b667a"); n.setAttribute("stroke-opacity", "0.5"); });
+  });
+  body.querySelectorAll("mjx-container svg").forEach(svg => svg.setAttribute("color", "#172033"));
+}
+function pdfDoc(f, html){
+  const root = document.createElement("div"); root.className = "pdfdoc";
+  root.innerHTML = `<div class="pdf-head"><div class="pdf-meta"></div><div class="pdf-title"></div>${f.t.h ? `<div class="pdf-hsub"></div>` : ""}</div><div class="md pdf-body"></div><div class="pdf-end">E&amp;TC हिंदी नोट्स · ${escH(S.lib.university)} · ${escH(S.lib.branch)} · Check against your textbook before the exam.</div>`;
+  root.querySelector(".pdf-meta").textContent = `${f.sem.name} · ${f.sub.code} ${f.sub.name} · Unit ${f.u.n}: ${f.u.name}`;
+  root.querySelector(".pdf-title").textContent = f.t.t; if(f.t.h) root.querySelector(".pdf-hsub").textContent = f.t.h;
+  const body = root.querySelector(".pdf-body"); body.innerHTML = html; fixSvgsForPdf(body);
+  return root;
+}
+function paginate(root){
+  const sel = ".pdf-head, h1, h2, h3, h4, p, li, .fig, div.eq, .tbl, pre, blockquote, hr, .pdf-end";
+  const items = [...root.querySelectorAll(sel)].filter(el => !el.parentElement.closest(".fig, .eq, .tbl, pre, p, blockquote, li, .pdf-head"));
+  for(const el of items){
+    const base = root.getBoundingClientRect().top, r = el.getBoundingClientRect();
+    const top = r.top - base, h = r.height; if(h <= 0) continue;
+    const pageEnd = (Math.floor(top / PAGE_H) + 1) * PAGE_H;
+    const need = /^H[1-4]$/.test(el.tagName) ? Math.min(h + 110, PAGE_H) : h;
+    if(top + need > pageEnd - 2 && need <= PAGE_H * 0.92 && top % PAGE_H > 4){
+      const sp = document.createElement("div"); sp.className = "pdf-spacer"; sp.style.height = (pageEnd - top) + "px"; el.parentNode.insertBefore(sp, el);
+    }
+  }
+}
+async function addDocPages(pdf, root, footer, startPage){
+  const holder = document.createElement("div");
+  holder.style.cssText = `position:fixed;left:-12000px;top:0;width:${PDF_W}px;pointer-events:none;`;
+  holder.appendChild(root); document.body.appendChild(holder);
+  try{
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    paginate(root);
+    const pages = Math.max(1, Math.ceil(root.getBoundingClientRect().height / PAGE_H));
+    root.style.height = (pages * PAGE_H) + "px";
+    const scale = Math.max(1, Math.min(2, 30000 / (pages * PAGE_H)));
+    const canvas = await html2canvas(root, { scale, backgroundColor:"#ffffff", logging:false, useCORS:true, width:PDF_W, height:pages*PAGE_H, windowWidth:PDF_W+40 });
+    const cw = PAGE_MM.w - 2*PAGE_MM.side, ch = PAGE_MM.h - PAGE_MM.top - PAGE_MM.bottom;
+    for(let i = 0; i < pages; i++){
+      const y0 = Math.round(i * PAGE_H * scale), y1 = Math.min(canvas.height, Math.round((i+1) * PAGE_H * scale));
+      const c = document.createElement("canvas"); c.width = canvas.width; c.height = Math.round(PAGE_H * scale);
+      const ctx = c.getContext("2d"); ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, c.width, c.height);
+      ctx.drawImage(canvas, 0, y0, canvas.width, y1 - y0, 0, 0, canvas.width, y1 - y0);
+      if(startPage + i > 0) pdf.addPage();
+      pdf.addImage(c.toDataURL("image/jpeg", 0.9), "JPEG", PAGE_MM.side, PAGE_MM.top, cw, ch);
+      pdf.setFontSize(8); pdf.setTextColor(120, 128, 140);
+      pdf.text(footer, PAGE_MM.w/2, PAGE_MM.h - 7, { align:"center" });
+    }
+    return pages;
+  } finally { holder.remove(); }
+}
+function numberPages(pdf){
+  const n = pdf.internal.getNumberOfPages();
+  for(let i = 1; i <= n; i++){ pdf.setPage(i); pdf.setFontSize(8); pdf.setTextColor(120, 128, 140); pdf.text(`${i} / ${n}`, PAGE_MM.w - PAGE_MM.side, PAGE_MM.h - 7, { align:"right" }); }
+}
+async function savePdf(pdf, filename){
+  const blob = pdf.output("blob");
+  let dl = null;
+  if(window.claude && claude.use){ try{ dl = await claude.use("downloads"); }catch(e){} }
+  if(dl){
+    try{ await dl.save({ filename, data: blob }); }
+    catch(e){ if(e && e.code !== "declined") showMsg("The PDF could not be saved here. Open the site in a normal browser to download it.", true); }
+  } else pdf.save(filename);
+}
+const fileBase = s => s.replace(/[\\/:*?"<>|#%{}~&]+/g, "").trim().replace(/\s+/g, "-").slice(0, 70);
+async function withBusy(btn, label, fn){
+  if(btn.disabled) return; const old = btn.textContent; btn.disabled = true; btn.textContent = label; showMsg("");
+  try{ await fn(); }catch(e){ console.error(e); showMsg("The PDF could not be created. Check your internet connection and try again.", true); }
+  finally{ btn.disabled = false; btn.textContent = old; }
+}
+async function topicPdf(){
+  const f = S.current; if(!f) return;
+  await withBusy($("pdfbtn"), "Preparing PDF…", async () => {
+    await loadPdfLibs(); if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    await typesetEl($("md"));
+    const pdf = new jspdf.jsPDF({ unit:"mm", format:"a4", orientation:"portrait", compress:true });
+    await addDocPages(pdf, pdfDoc(f, $("md").innerHTML), `E&TC Hindi Notes - ${f.sub.code} ${f.sub.name}`, 0);
+    numberPages(pdf);
+    await savePdf(pdf, `${f.sub.code}-${f.t.id.split("-").slice(1).join(".")}-${fileBase(f.t.t)}.pdf`);
+  });
+}
+async function unitPdf(fs, u, btn){
+  await withBusy(btn, "Preparing…", async () => {
+    await loadPdfLibs(); if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    const pdf = new jspdf.jsPDF({ unit:"mm", format:"a4", orientation:"portrait", compress:true });
+    let page = 0; const topics = u.topics.filter(t => t.ready);
+    for(const [k, t] of topics.entries()){
+      btn.textContent = `Preparing ${k+1}/${topics.length}…`;
+      const f = find(t.id); const tmp = document.createElement("div"); tmp.className = "md";
+      tmp.style.cssText = `position:fixed;left:-12000px;top:0;width:${PDF_W}px`;
+      tmp.innerHTML = renderMd(await getNote(t.id), false); document.body.appendChild(tmp);
+      await typesetEl(tmp); const html = tmp.innerHTML; tmp.remove();
+      page += await addDocPages(pdf, pdfDoc(f, html), `E&TC Hindi Notes - ${fs.sub.code} Unit ${u.n}`, page);
+    }
+    numberPages(pdf);
+    await savePdf(pdf, `${fs.sub.code}-Unit-${u.n}-${fileBase(u.name)}.pdf`);
+  });
+}
+
+/* ---------- boot ---------- */
+(async () => {
+  try{ const s = localStorage.getItem("sem"); if(s) S.sem = s; }catch(e){}
+  $("search").addEventListener("input", doSearch);
+  $("pdfbtn").onclick = topicPdf;
+  if(REQUEST_URL){ document.querySelectorAll(".req").forEach(a => { a.href = REQUEST_URL; a.hidden = false; }); }
+  try{ await loadLib(); }catch(e){ $("v-home").innerHTML = `<p class="note err">The notes library could not be loaded. Check your internet connection and reload the page.</p>`; return; }
+  const total = S.flat.length, ready = S.flat.filter(x => x.t.ready).length;
+  $("stat").textContent = `${ready} of ${total} topics ready`;
+  window.addEventListener("hashchange", route); route();
+})();
+
+})();
+</script>
+
+</body>
+</html>
