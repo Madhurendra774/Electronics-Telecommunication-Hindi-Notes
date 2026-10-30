@@ -112,6 +112,7 @@ mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%}
 .fig{margin:1em 0 .2em;overflow-x:auto;color:var(--ink);text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px}
 .fig svg{width:100%;max-width:620px;height:auto;display:inline-block;font-family:var(--f-body)}
 .fig svg .hl{stroke:var(--red)}
+@media (max-width:600px){.fig{padding:8px}.fig-blocks svg{min-width:600px;max-width:none}.fig-plot svg{max-width:none}}
 .fig svg text.hl,.fig svg [fill="currentColor"].hl,.fig svg .hl [fill="currentColor"]{fill:var(--red)}
 .fig svg .hl text{fill:var(--ink)}
 .fig svg .term{fill:var(--paper)}
@@ -280,9 +281,14 @@ let MK = 0;
 /* label with one trailing subscript: R_L, V_{CC} */
 function sub(text){
   text = String(text ?? "");
-  const m = text.match(/^([^_]*)_\{?([^}]*)\}?$/);
-  if(!m || !m[2]) return escT(text);
-  return escT(m[1]) + `<tspan dy="4" font-size="10">${escT(m[2])}</tspan>`;
+  const re = /_(\{([^}]*)\}|([A-Za-z0-9]+))/g; let out = "", last = 0, low = false, m;
+  while((m = re.exec(text))){
+    const pre = text.slice(last, m.index);
+    if(pre){ out += low ? `<tspan dy="-4">${escT(pre)}</tspan>` : escT(pre); low = false; }
+    out += `<tspan dy="${low ? 0 : 4}" font-size="10">${escT(m[2] ?? m[3])}</tspan>`; low = true; last = re.lastIndex;
+  }
+  const rest = text.slice(last); if(rest) out += low ? `<tspan dy="-4">${escT(rest)}</tspan>` : escT(rest);
+  return out || escT(text);
 }
 function T(x, y, txt, anchor, size){
   const a = ["start","middle","end"].includes(anchor) ? anchor : "middle";
@@ -767,24 +773,41 @@ function checkCircuit(body){
 }
 
 /* ---------- plot ---------- */
-function tickList(v){ if(!Array.isArray(v)) return []; return v.map(t => Array.isArray(t) ? [num(t[0]), t[1] ?? ""] : (t && typeof t==="object") ? [num(t.at ?? t.v ?? t.value), t.label ?? t.text ?? ""] : [num(t), String(t)]); }
+function tickList(v){ if(!Array.isArray(v)) return []; return v.map(t => Array.isArray(t) ? [num(t[0]), t[1] ?? "", t[2] || ""] : (t && typeof t==="object") ? [num(t.at ?? t.v ?? t.value), t.label ?? t.text ?? "", t.pos || ""] : [num(t), String(t), ""]); }
+/* smooth path through points (Catmull-Rom, control points clamped so the curve never overshoots) */
+function smoothPath(P){
+  if(P.length < 3) return "M" + P.map(p => f1(p[0])+" "+f1(p[1])).join(" L");
+  const cl = (v,a,b) => Math.max(Math.min(a,b), Math.min(Math.max(a,b), v));
+  let d = `M${f1(P[0][0])} ${f1(P[0][1])}`;
+  for(let i = 0; i < P.length-1; i++){
+    const p0 = P[i-1] || P[i], p1 = P[i], p2 = P[i+1], p3 = P[i+2] || P[i+1];
+    const c1x = cl(p1[0] + (p2[0]-p0[0])/6, p1[0], p2[0]), c1y = cl(p1[1] + (p2[1]-p0[1])/6, p1[1], p2[1]);
+    const c2x = cl(p2[0] - (p3[0]-p1[0])/6, p1[0], p2[0]), c2y = cl(p2[1] - (p3[1]-p1[1])/6, p1[1], p2[1]);
+    d += ` C${f1(c1x)} ${f1(c1y)} ${f1(c2x)} ${f1(c2y)} ${f1(p2[0])} ${f1(p2[1])}`;
+  }
+  return d;
+}
 function drawPlot(spec){
   const xs = spec.x || {}; const a = num(xs.from ?? 0), b = num(xs.to ?? 2*Math.PI);
   if(!(b > a)) throw new Error("x range");
-  const panels = Array.isArray(spec.panels) && spec.panels.length ? spec.panels : [spec];
+  const panels = (Array.isArray(spec.panels) && spec.panels.length ? spec.panels : [spec]).slice(0,4);
   const xticks = tickList(xs.ticks);
   let maxLab = 0; panels.forEach(pn => { try{ tickList((pn.y||{}).ticks).forEach(([v,l]) => { maxLab = Math.max(maxLab, String(l).replace(/[_{}]/g,"").length); }); }catch(e){} });
-  const W = 620, L = Math.max(62, Math.min(170, 18 + maxLab*6.6)), R = 44, PH = 120, GT = 26, GB = 30, N = 600;
-  const H = panels.length * (PH+GT+GB);
+  const narrow = typeof window !== "undefined" && window.innerWidth && window.innerWidth < 640;
+  const W = narrow ? 400 : 640, R = 50, GT = 34, GB = 36, N = 600;
+  const PH = panels.length === 1 ? Math.max(160, Math.min(320, num(spec.height ?? 240))) : panels.length === 2 ? 160 : 130;
+  const negX = a < 0 && b > 0;
+  const L = negX ? 40 : Math.max(64, Math.min(170, 20 + maxLab*6.6));
+  const H = panels.length * (PH+GT+GB) + (negX ? 8 : 0);
   const sx = x => L + (x-a)/(b-a)*(W-L-R);
   let out = "";
-  panels.slice(0,4).forEach((pn, i) => {
+  panels.forEach((pn, i) => {
     const top = i*(PH+GT+GB) + GT, ys = pn.y || {};
     const series = (pn.curves || []).slice(0,5).map(c => {
-      let pts = [];
-      if(Array.isArray(c.pts || c.points)) pts = (c.pts || c.points).map(p=>[Number(p[0]),Number(p[1])]).filter(p=>isFinite(p[0])&&isFinite(p[1]));
+      let pts = [], fromPts = false;
+      if(Array.isArray(c.pts || c.points)){ fromPts = true; pts = (c.pts || c.points).map(p=>[Number(p[0]),Number(p[1])]).filter(p=>isFinite(p[0])&&isFinite(p[1])); }
       else if(c.f || c.expr || c.y){ const f = compile(c.f || c.expr || c.y); for(let k=0;k<=N;k++){ const x=a+(b-a)*k/N; let y; try{ y=f(x); }catch(err){ y=NaN; } pts.push([x, isFinite(y) && Math.abs(y)<1e6 ? y : NaN]); } }
-      return { c, pts };
+      return { c, pts, fromPts };
     });
     let ymin = ys.from != null ? num(ys.from) : Infinity, ymax = ys.to != null ? num(ys.to) : -Infinity;
     if(ys.from == null || ys.to == null){
@@ -794,25 +817,36 @@ function drawPlot(spec){
     }
     const sy = y => top + (ymax-y)/(ymax-ymin)*PH;
     const y0 = (ymin<=0 && ymax>=0) ? sy(0) : top+PH;
-    const xa = (a<0 && b>0) ? sx(0) : L;
+    const xa = negX ? sx(0) : L;
+    const negY = ymin < 0 && ymax > 0;
     let g = "";
     xticks.forEach(([v]) => { if(v>=a && v<=b){ const X=sx(v); g += `<path class="grid" d="M${f1(X)} ${top} V${top+PH}" stroke-dasharray="3 4" stroke-width="1"/>`; } });
     tickList(ys.ticks).forEach(([v,lab]) => { if(v>=ymin && v<=ymax){ const Y=sy(v); g += `<path class="grid" d="M${L} ${f1(Y)} H${W-R}" stroke-dasharray="3 4" stroke-width="1"/><path d="M${f1(xa-4)} ${f1(Y)} H${f1(xa)}" stroke-width="1.4"/>` + T(xa-8, Y+4, lab, "end", 12); } });
-    g += `<path d="M${L} ${f1(y0)} H${W-R+10}" stroke-width="1.4"/>` + head(W-R+16, y0, 1, 0, 7);
-    g += `<path d="M${f1(xa)} ${top+PH} V${top-4}" stroke-width="1.4"/>` + head(xa, top-10, 0, -1, 7);
-    xticks.forEach(([v,lab]) => { if(v>=a && v<=b){ const X=sx(v); g += `<path d="M${f1(X)} ${f1(y0-4)} V${f1(y0+4)}" stroke-width="1.4"/>` + T(X, y0+17, lab, "middle", 12); } });
-    g += T(xa+8, top-8, ys.label || "", "start", 13);
-    if(i === panels.length-1 || pn.xlabel) g += T(W-R+18, y0+18, pn.xlabel || xs.label || "x", "middle", 13);
-    else g += T(W-R+18, y0+18, xs.label || "", "middle", 12);
-    series.forEach(({c, pts}) => {
-      let d = "", pen = false;
-      pts.forEach(([x,y]) => { if(!isFinite(y) || y<ymin-(ymax-ymin) || y>ymax+(ymax-ymin)){ pen=false; return; } const X=sx(x), Y=Math.max(top-6, Math.min(top+PH+6, sy(y))); d += (pen?"L":"M")+f1(X)+" "+f1(Y)+" "; pen = true; });
+    // axes (arrows on both ends where the range is negative)
+    g += `<path d="M${negX ? L-10 : L} ${f1(y0)} H${W-R+10}" stroke-width="1.4"/>` + head(W-R+16, y0, 1, 0, 7);
+    if(negX) g += head(L-16, y0, -1, 0, 7);
+    g += `<path d="M${f1(xa)} ${negY ? top+PH+4 : top+PH} V${top-4}" stroke-width="1.4"/>` + head(xa, top-10, 0, -1, 7);
+    if(negY) g += head(xa, top+PH+10, 0, 1, 7);
+    xticks.forEach(([v,lab,pos]) => { if(v>=a && v<=b){ const X=sx(v); g += `<path d="M${f1(X)} ${f1(y0-4)} V${f1(y0+4)}" stroke-width="1.4"/>` + T(X, pos === "above" ? y0-9 : y0+18, lab, "middle", 12); } });
+    g += T(xa+10, top-10, ys.label || "", "start", 13);
+    if(negY && ys.neg) g += T(xa+10, top+PH+16, ys.neg, "start", 13);
+    const xl = (i === panels.length-1 || pn.xlabel) ? (pn.xlabel || xs.label || "x") : (xs.label || "");
+    g += T(W-R+22, y0+5, xl, "start", 13);
+    if(negX && xs.neg) g += T(L-6, y0+20, xs.neg, "start", 13);
+    series.forEach(({c, pts, fromPts}) => {
+      const clipY = y => Math.max(top-6, Math.min(top+PH+6, sy(y)));
+      let d = "";
+      if(fromPts && c.smooth !== false){ d = smoothPath(pts.filter(p => p[1]>=ymin-(ymax-ymin) && p[1]<=ymax+(ymax-ymin)).map(([x,y]) => [sx(x), clipY(y)])); }
+      else { let pen = false; pts.forEach(([x,y]) => { if(!isFinite(y) || y<ymin-(ymax-ymin) || y>ymax+(ymax-ymin)){ pen=false; return; } d += (pen?"L":"M")+f1(sx(x))+" "+f1(clipY(y))+" "; pen = true; }); }
       g += `<path d="${d.trim()}"${c.hl ? ' class="hl"' : ""}${c.dash ? ' stroke-dasharray="6 5"' : ""} stroke-width="${c.hl ? 2.6 : 2}"/>`;
-      if(c.name){ const last = pts.filter(p=>isFinite(p[1])).pop(); if(last) g += T(Math.min(sx(last[0])+6, W-R-4), sy(last[1])-6, c.name, "end", 12); }
+      if(c.name){
+        if(Array.isArray(c.nameAt)) g += T(sx(num(c.nameAt[0])), sy(num(c.nameAt[1])), c.name, c.nameAnchor || "middle", 12);
+        else { const last = pts.filter(p=>isFinite(p[1])).pop(); if(last){ const X = sx(last[0]); g += X > W/2 ? T(Math.min(X-8, W-R-4), clipY(last[1])-10, c.name, "end", 12) : T(X+8, clipY(last[1])-10, c.name, "start", 12); } }
+      }
     });
     out += g;
   });
-  return `<svg viewBox="0 0 ${W+10} ${H}" xmlns="http://www.w3.org/2000/svg" role="img"><g stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${out}</g></svg>`;
+  return `<svg viewBox="0 0 ${W+16} ${H}" xmlns="http://www.w3.org/2000/svg" role="img"><g stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${out}</g></svg>`;
 }
 
 /* ---------- block diagram ---------- */
@@ -886,7 +920,7 @@ function figure(f, streaming){
   try{
     let warn = "";
     if(f.lang === "circuit" && !streaming){ try{ const c = DIAG.checkCircuit(f.body); if(c.issues.length) warn = `<div class="fig-warn">${repairing ? "Checking this circuit's wiring…" : "This circuit may have a wiring error. Check it against your textbook."}</div>`; }catch(e){} }
-    return `<div class="fig">${DIAG.render(f.lang, f.body)}</div>${warn}`;
+    return `<div class="fig fig-${f.lang}">${DIAG.render(f.lang, f.body)}</div>${warn}`;
   }
   catch(e){ return `<div class="pending">This diagram could not be drawn.</div>`; }
 }
