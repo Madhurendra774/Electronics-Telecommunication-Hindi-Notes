@@ -211,6 +211,30 @@ html{-webkit-text-size-adjust:100%}
 .pg.nx{text-align:right}
 .lib-foot{border-top:1px solid var(--line);padding-top:12px;font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
 .lib-foot a{color:var(--accent)}
+.tact{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--paper)}
+.seg button{font:600 .84rem var(--f-body);border:0;background:transparent;color:var(--muted);padding:5px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+.seg button + button{border-left:1px solid var(--line)}
+.seg button small{font-weight:500;font-size:.7rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.segrow{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.seglbl{font-size:.85rem;color:var(--muted)}
+.deep{border-left:3px solid var(--accent);background:var(--soft);padding:2px 16px 10px;margin:1.4em 0;border-radius:0 8px 8px 0}
+.deep::before{content:"In-depth · विस्तृत अध्ययन";display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.04em;color:var(--accent);margin:12px 0 0}
+.qa-tools{display:flex;justify-content:flex-end;margin:.4em 0}
+details.qa{border:1px solid var(--line);border-radius:8px;background:var(--paper);margin:.55em 0}
+details.qa > summary{cursor:pointer;list-style:none;padding:10px 14px;display:flex;gap:10px;align-items:baseline;font-weight:600;line-height:1.55}
+details.qa > summary::-webkit-details-marker{display:none}
+details.qa > summary::before{content:"▸";color:var(--accent);flex:none}
+details.qa[open] > summary::before{content:"▾"}
+details.qa > summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:8px}
+details.qa[open]{padding-bottom:8px}
+details.qa[open] > summary{border-bottom:1px dashed var(--line);margin-bottom:6px}
+details.qa > :not(summary){margin-left:16px;margin-right:16px}
+.qbadge{font-family:var(--f-mono);font-size:.66rem;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap;color:#2e9e5b;flex:none}
+.qa-long .qbadge{color:var(--red)}
+.qtext{min-width:0}
 .pdfdoc .pdf-hsub{font-size:15px;color:#5b667a;margin-top:2px}
 @media (max-width:520px){.tlist a,.tlist .na{grid-template-columns:36px 1fr;}.tlist .chip{grid-column:2;justify-self:start}.pager{grid-template-columns:1fr}.pg.nx{text-align:left}}
 </style>
@@ -236,12 +260,13 @@ html{-webkit-text-size-adjust:100%}
     <div class="crumb" id="s-crumb"></div>
     <h2 class="stitle" id="s-title"></h2>
     <p class="smeta" id="s-meta"></p>
+    <div class="segrow"><span class="seglbl">Note length for reading and Unit PDF</span><div class="seg" id="s-seg" data-seg role="group" aria-label="Note length"></div></div>
     <div class="msgbox"></div>
     <div class="units" id="units"></div>
   </section>
 
   <section class="view" id="v-topic" hidden>
-    <div class="tbar"><div class="crumb" id="t-crumb"></div><button class="btn btn-pdf" id="pdfbtn" type="button">Download PDF</button></div>
+    <div class="tbar"><div class="crumb" id="t-crumb"></div><div class="tact"><div class="seg" id="t-seg" data-seg role="group" aria-label="Note length"></div><button class="btn btn-pdf" id="pdfbtn" type="button">Download PDF</button></div></div>
     <div class="msgbox"></div>
     <article class="sheet" id="sheet">
       <div class="margin" id="margin"></div>
@@ -961,7 +986,41 @@ function renderMd(text, streaming){
 const REQUEST_URL = "";            // optional: a Google Form link where students request topics or report mistakes
 const $ = id => document.getElementById(id);
 let repairing = false;
-const S = { lib: null, sem: "3", flat: [], cache: {} };
+const S = { lib: null, sem: "3", flat: [], cache: {}, mode: "full" };
+const MODES = [["short","Short","संक्षिप्त"],["full","Full","पूर्ण"],["detailed","Detailed","विस्तृत"]];
+const modeName = m => (MODES.find(x => x[0] === m) || MODES[1])[1];
+
+/* note-length modes and model answers:
+   :::short ... :::   quick revision (shown only in Short)
+   :::detail ... :::  in-depth material (shown only in Detailed)
+   :::q short|long  question  ---  answer  :::   collapsible model answer (all modes) */
+function applyMode(text, mode){
+  const blocks = { short: [], detail: [] };
+  let t = text.replace(/^:::(short|detail)[ \t]*\n([\s\S]*?)\n:::[ \t]*$/gm, (m, k, body) => { blocks[k].push(body); return `\u0001${k}${blocks[k].length-1}\u0001`; });
+  const qaAt = t.search(/^## [^\n]*\(Questions with Answers\)/m);
+  const qa = qaAt >= 0 ? t.slice(qaAt) : "";
+  if(mode === "short" && blocks.short.length) t = blocks.short.join("\n\n") + (qa ? "\n\n" + qa : "");
+  else t = t.replace(/\u0001(short|detail)(\d+)\u0001/g, (m, k, i) => k === "detail" && mode === "detailed" ? `<div class="deep">\n\n${blocks.detail[+i]}\n\n</div>` : "");
+  t = t.replace(/\u0001(short|detail)(\d+)\u0001/g, "");
+  return t.replace(/^:::q[ \t]+(short|long)[ \t]*\n([\s\S]*?)\n---[ \t]*\n([\s\S]*?)\n:::[ \t]*$/gm, (m, k, q, ans) =>
+    `<details class="qa qa-${k}">\n<summary><span class="qbadge">${k === "short" ? "Short answer" : "Long answer"}</span><span class="qtext">${escH(q.trim())}</span></summary>\n\n${ans}\n\n</details>`);
+}
+function buildSeg(box, onChange){
+  box.innerHTML = "";
+  MODES.forEach(([k, en, hi]) => {
+    const b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-pressed", k === S.mode ? "true" : "false");
+    b.innerHTML = `<span>${en}</span><small>${hi}</small>`;
+    b.onclick = () => { if(S.mode === k) return; S.mode = k; try{ localStorage.setItem("mode", k); }catch(e){} document.querySelectorAll("[data-seg]").forEach(x => buildSeg(x, onChange)); onChange && onChange(); };
+    box.append(b);
+  });
+}
+function addAnswerTools(el){
+  const qas = el.querySelectorAll("details.qa"); if(!qas.length) return;
+  const bar = document.createElement("div"); bar.className = "qa-tools";
+  const btn = document.createElement("button"); btn.type = "button"; btn.className = "btn"; btn.textContent = "Show all answers";
+  btn.onclick = () => { const open = btn.textContent.startsWith("Show"); qas.forEach(d => d.open = open); btn.textContent = open ? "Hide all answers" : "Show all answers"; };
+  bar.append(btn); qas[0].parentNode.insertBefore(bar, qas[0]);
+}
 
 async function loadLib(){
   const r = await fetch("data/library.json", { cache: "no-cache" });
@@ -1014,6 +1073,7 @@ function showSubject(code){
   S.sem = f.sem.id; setView("subject"); document.title = `${f.sub.name} · E&TC हिंदी नोट्स`;
   $("s-crumb").innerHTML = `<a href="#home">${escH(f.sem.name)}</a> <span>›</span> ${escH(f.sub.code)}`;
   $("s-title").textContent = f.sub.name;
+  buildSeg($("s-seg"));
   $("s-meta").textContent = `Subject code ${f.sub.code} · Paper code ${f.sub.paper}${f.sub.elective ? " · " + f.sub.elective : ""} · ${readyCount(f.sub)} of ${topicCount(f.sub)} topics ready`;
   const box = $("units"); box.innerHTML = "";
   f.sub.units.forEach(u => {
@@ -1038,6 +1098,7 @@ function showSubject(code){
 
 async function showTopic(id){
   const f = find(id); if(!f || !f.t.ready) return showHome();
+  buildSeg($("t-seg"), () => showTopic(id));
   S.sem = f.sem.id; S.current = f; setView("topic");
   document.title = `${f.t.t} · E&TC हिंदी नोट्स`;
   $("t-crumb").innerHTML = `<a href="#home">${escH(f.sem.name)}</a> <span>›</span> <a href="#s-${f.sub.code}">${escH(f.sub.name)}</a> <span>›</span> Unit ${f.u.n}`;
@@ -1054,7 +1115,7 @@ async function showTopic(id){
   try{
     const text = await getNote(id);
     if(S.current !== f) return;
-    $("md").innerHTML = renderMd(text, false); typesetEl($("md"));
+    $("md").innerHTML = renderMd(applyMode(text, S.mode), false); addAnswerTools($("md")); typesetEl($("md"));
   }catch(e){ $("md").innerHTML = ""; showMsg("These notes could not be loaded. Check your internet connection and reload the page.", true); }
 }
 
@@ -1109,7 +1170,8 @@ function loadPdfLibs(){
   return libsReady;
 }
 function fixSvgsForPdf(body){
-  body.querySelectorAll(".fig-warn, .pending, .thinking").forEach(n => n.remove());
+  body.querySelectorAll(".fig-warn, .pending, .thinking, .qa-tools").forEach(n => n.remove());
+  body.querySelectorAll("details").forEach(d => d.setAttribute("open", ""));
   body.querySelectorAll("mjx-assistive-mml").forEach(n => n.remove());
   body.querySelectorAll(".fig svg").forEach(svg => {
     const vb = (svg.getAttribute("viewBox") || "").split(/\s+/).map(Number);
@@ -1129,7 +1191,7 @@ function fixSvgsForPdf(body){
 function pdfDoc(f, html){
   const root = document.createElement("div"); root.className = "pdfdoc";
   root.innerHTML = `<div class="pdf-head"><div class="pdf-meta"></div><div class="pdf-title"></div>${f.t.h ? `<div class="pdf-hsub"></div>` : ""}</div><div class="md pdf-body"></div><div class="pdf-end">E&amp;TC हिंदी नोट्स · ${escH(S.lib.university)} · ${escH(S.lib.branch)} · Check against your textbook before the exam.</div>`;
-  root.querySelector(".pdf-meta").textContent = `${f.sem.name} · ${f.sub.code} ${f.sub.name} · Unit ${f.u.n}: ${f.u.name}`;
+  root.querySelector(".pdf-meta").textContent = `${f.sem.name} · ${f.sub.code} ${f.sub.name} · Unit ${f.u.n}: ${f.u.name} · ${modeName(S.mode)} notes`;
   root.querySelector(".pdf-title").textContent = f.t.t; if(f.t.h) root.querySelector(".pdf-hsub").textContent = f.t.h;
   const body = root.querySelector(".pdf-body"); body.innerHTML = html; fixSvgsForPdf(body);
   return root;
@@ -1199,7 +1261,7 @@ async function topicPdf(){
     const pdf = new jspdf.jsPDF({ unit:"mm", format:"a4", orientation:"portrait", compress:true });
     await addDocPages(pdf, pdfDoc(f, $("md").innerHTML), `E&TC Hindi Notes - ${f.sub.code} ${f.sub.name}`, 0);
     numberPages(pdf);
-    await savePdf(pdf, `${f.sub.code}-${f.t.id.split("-").slice(1).join(".")}-${fileBase(f.t.t)}.pdf`);
+    await savePdf(pdf, `${f.sub.code}-${f.t.id.split("-").slice(1).join(".")}-${fileBase(f.t.t)}${S.mode === "full" ? "" : "-" + S.mode}.pdf`);
   });
 }
 async function unitPdf(fs, u, btn){
@@ -1211,18 +1273,18 @@ async function unitPdf(fs, u, btn){
       btn.textContent = `Preparing ${k+1}/${topics.length}…`;
       const f = find(t.id); const tmp = document.createElement("div"); tmp.className = "md";
       tmp.style.cssText = `position:fixed;left:-12000px;top:0;width:${PDF_W}px`;
-      tmp.innerHTML = renderMd(await getNote(t.id), false); document.body.appendChild(tmp);
+      tmp.innerHTML = renderMd(applyMode(await getNote(t.id), S.mode), false); document.body.appendChild(tmp);
       await typesetEl(tmp); const html = tmp.innerHTML; tmp.remove();
       page += await addDocPages(pdf, pdfDoc(f, html), `E&TC Hindi Notes - ${fs.sub.code} Unit ${u.n}`, page);
     }
     numberPages(pdf);
-    await savePdf(pdf, `${fs.sub.code}-Unit-${u.n}-${fileBase(u.name)}.pdf`);
+    await savePdf(pdf, `${fs.sub.code}-Unit-${u.n}-${fileBase(u.name)}${S.mode === "full" ? "" : "-" + S.mode}.pdf`);
   });
 }
 
 /* ---------- boot ---------- */
 (async () => {
-  try{ const s = localStorage.getItem("sem"); if(s) S.sem = s; }catch(e){}
+  try{ const s = localStorage.getItem("sem"); if(s) S.sem = s; const m = localStorage.getItem("mode"); if(MODES.some(x => x[0] === m)) S.mode = m; }catch(e){}
   $("search").addEventListener("input", doSearch);
   $("pdfbtn").onclick = topicPdf;
   if(REQUEST_URL){ document.querySelectorAll(".req").forEach(a => { a.href = REQUEST_URL; a.hidden = false; }); }
